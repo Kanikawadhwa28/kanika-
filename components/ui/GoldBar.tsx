@@ -1,0 +1,1 @@
+export const GoldBar = () => <span className="gold-bar" />;
