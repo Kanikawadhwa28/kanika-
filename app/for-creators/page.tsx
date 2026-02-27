@@ -23,8 +23,8 @@ export default function ForCreatorsPage() {
       <PageHero
         tag="For Creators"
         h1="Get Discovered. Get Paid. Grow Faster."
-        subtitle="Join 7,50,000+ verified creators already earning with India's top brands on InfluenceIN."
-        buttons={[{ label: "Join for Free →", href: "#", variant: "gold" }]}
+        subtitle="Join 7,50,000+ verified creators already earning with India's top brands on Avenue Marketing Agency."
+        buttons={[]}
       />
 
       <section className="reveal" style={{ paddingTop: 10 }}>
@@ -40,20 +40,56 @@ export default function ForCreatorsPage() {
       <section className="reveal">
         <div className="tc" style={{ marginBottom: 26 }}>
           <span className="stag">Community</span>
-          <h2 className="sh">Creators Already on <em>InfluenceIN</em></h2>
+          <h2 className="sh">Creators Already on <em>Avenue Marketing Agency</em></h2>
           <p className="ssub" style={{ margin: "10px auto 0" }}>Hover any card to see their stats.</p>
           <span className="gold-bar" />
         </div>
+
         <div className="creator-grid-page">
           {visibleCreators.map((c) => (
             <div key={c.name} className="icard">
               <div className="icard-photo">
+                {/* Image with emoji fallback */}
                 <div
                   className="icard-img"
-                  style={{ background: `linear-gradient(135deg,${c.bg},#0d0d0d)` }}
+                  style={{ background: `linear-gradient(135deg,${c.bg},#0d0d0d)`, position: "relative" }}
                 >
-                  {c.emoji}
+                  {c.image ? (
+                    <img
+                      src={`/images/creators/${c.image}`}
+                      alt={c.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        position: "absolute",
+                        inset: 0,
+                      }}
+                      onError={(e) => {
+                        // Hide broken image, show emoji fallback
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = "none";
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = "flex";
+                      }}
+                    />
+                  ) : null}
+                  {/* Emoji fallback — hidden if image loads */}
+                  <span
+                    style={{
+                      display: c.image ? "none" : "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                      height: "100%",
+                      fontSize: 48,
+                    }}
+                  >
+                    {c.emoji}
+                  </span>
                 </div>
+
+                {/* Hover overlay */}
                 <div className="icard-ov">
                   <div className="ov-f">{c.audience}</div>
                   <div className="ov-er">Audience across Instagram & YouTube</div>
@@ -64,6 +100,7 @@ export default function ForCreatorsPage() {
                   <span className="ov-cta">View Profile →</span>
                 </div>
               </div>
+
               <div className="icard-info">
                 <div className="icard-name">{c.name}</div>
                 <div className="icard-meta">
@@ -73,6 +110,7 @@ export default function ForCreatorsPage() {
             </div>
           ))}
         </div>
+
         <div style={{ textAlign: "center", marginTop: 32 }}>
           <button
             type="button"
@@ -86,8 +124,8 @@ export default function ForCreatorsPage() {
 
       <section className="reveal">
         <div className="tc" style={{ marginBottom: 32 }}>
-          <span className="stag">Why InfluenceIN</span>
-          <h2 className="sh">Why Creators Choose <em>InfluenceIN</em></h2>
+          <span className="stag">Why Avenue</span>
+          <h2 className="sh">Why Creators Choose <em>Avenue Marketing Agency</em></h2>
           <span className="gold-bar" />
         </div>
         <div className="benefit-grid">
@@ -128,7 +166,7 @@ export default function ForCreatorsPage() {
           <span className="gold-bar" />
         </div>
         <div style={{ textAlign: "center", marginTop: 30 }}>
-          <a href="#" className="btn btn-y">
+          <a href="/contact?creator=1&query=Creator" className="btn btn-y">
             Join as a Creator →
           </a>
         </div>
@@ -139,4 +177,3 @@ export default function ForCreatorsPage() {
     </>
   );
 }
-

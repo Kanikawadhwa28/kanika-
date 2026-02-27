@@ -1,11 +1,22 @@
 "use client";
 
+import { useState } from "react";
+
 export default function NewsletterSection() {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+
   const handleSubscribe = () => {
-    const input = document.querySelector<HTMLInputElement>(".nl-inp");
-    if (!input?.value.includes("@")) return;
-    alert("Subscribed! Check " + input.value + " for confirmation.");
-    input.value = "";
+    if (status === "sending") return;
+    setStatus("sending");
+
+    const subject = encodeURIComponent("Newsletter subscribe — Avenue Marketing Agency");
+    const body = encodeURIComponent(
+      "Hey, visited website and clicked on subscribe."
+    );
+
+    window.location.href = `mailto:avenueteamofficial@gmail.com?subject=${subject}&body=${body}`;
+
+    setTimeout(() => setStatus("sent"), 200);
   };
 
   return (
@@ -19,8 +30,16 @@ export default function NewsletterSection() {
         Join 12,000+ marketers. No spam. Unsubscribe anytime.
       </p>
       <div className="nl-form">
-        <input className="nl-inp" type="email" placeholder="Enter your work email..." />
-        <button className="btn btn-y" onClick={handleSubscribe}>Subscribe →</button>
+        <button
+          type="button"
+          className="btn btn-y"
+          onClick={handleSubscribe}
+          disabled={status === "sending"}
+        >
+          {status === "idle" && "Subscribe →"}
+          {status === "sending" && "Sending…"}
+          {status === "sent" && "Sent ✓"}
+        </button>
       </div>
       <p className="nl-note">📋 Weekly insights • 📊 Campaign data • 🎯 Creator spotlights — every Tuesday</p>
     </section>

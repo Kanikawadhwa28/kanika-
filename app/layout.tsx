@@ -6,8 +6,8 @@ import ClientProviders from "@/components/ClientProviders";
 import BackToTop from "@/components/ui/BackToTop";
 
 export const metadata: Metadata = {
-  title: "InfluenceIN — India's #1 Influencer Marketing Platform",
-  description: "Connect with 7,50,000+ verified influencers.",
+  title: "Avenue Marketing Agency — India's #1 Influencer & Barter Collaboration Agency",
+  description: "Avenue Marketing Agency connects brands with 7,50,000+ verified influencers for high-ROI and barter collaborations.",
 };
 
 export default function RootLayout({

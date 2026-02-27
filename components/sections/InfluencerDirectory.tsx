@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState } from "react";
 
 const CATEGORIES = ["All", "Fashion", "Travel", "Food", "Beauty", "Fitness", "Tech", "Gaming", "Finance"];
 
@@ -15,63 +15,14 @@ const INFLUENCERS = [
   { n: "Dev Sharma", c: "finance", cl: "Finance", f: "650K", er: "4.1%", ig: "650K", yt: "900K", e: "💰", bg: "#0a0a00" },
 ];
 
+type Influencer = (typeof INFLUENCERS)[0];
+
 export default function InfluencerDirectory() {
-  useEffect(() => {
-    const catRow = document.getElementById("catRow");
-    const infGrid = document.getElementById("infGrid");
-    if (!catRow || !infGrid) return;
+  const [filter, setFilter] = useState("all");
+  const [selected, setSelected] = useState<Influencer | null>(null);
 
-    // Render influencer cards filtered by category
-    const renderCards = (filter: string) => {
-      const filtered = filter === "all"
-        ? INFLUENCERS
-        : INFLUENCERS.filter((inf) => inf.c === filter);
-
-      infGrid.innerHTML = filtered
-        .map(
-          (inf) => `
-          <div class="icard">
-            <div class="icard-photo">
-              <div class="icard-img" style="background:linear-gradient(135deg,${inf.bg},#0d0d0d);height:100%;">${inf.e}</div>
-              <div class="icard-ov">
-                <div class="ov-f">${inf.f}</div>
-                <div class="ov-er">Engagement: ${inf.er}</div>
-                <div class="ov-plats">
-                  <span class="plat ig">📸 ${inf.ig}</span>
-                  <span class="plat yt">▶ ${inf.yt}</span>
-                </div>
-                <a href="#" class="ov-cta" onclick="event.stopPropagation()">📊 View Insights</a>
-              </div>
-            </div>
-            <div class="icard-info">
-              <div class="icard-name">${inf.n}</div>
-              <div class="icard-cat">${inf.cl}</div>
-              <div class="icard-meta">
-                <span>📸 ${inf.ig}</span>
-                <span class="ds"></span>
-                <span>${inf.er} ER</span>
-              </div>
-            </div>
-          </div>`
-        )
-        .join("");
-    };
-
-    // Build category filter buttons
-    CATEGORIES.forEach((cat) => {
-      const btn = document.createElement("button");
-      btn.className = "catb" + (cat === "All" ? " on" : "");
-      btn.textContent = cat;
-      btn.onclick = () => {
-        document.querySelectorAll(".catb").forEach((b) => b.classList.remove("on"));
-        btn.classList.add("on");
-        renderCards(cat.toLowerCase());
-      };
-      catRow.appendChild(btn);
-    });
-
-    renderCards("all");
-  }, []);
+  const filtered =
+    filter === "all" ? INFLUENCERS : INFLUENCERS.filter((inf) => inf.c === filter);
 
   return (
     <section id="top-creators" className="inf-bg reveal">
@@ -83,15 +34,100 @@ export default function InfluencerDirectory() {
         </p>
       </div>
 
-      {/* Category filter row - buttons added by useEffect */}
-      <div className="cat-row" id="catRow" />
+      {/* Category filter pills */}
+      <div className="cat-row">
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat}
+            className={`catb${filter === cat.toLowerCase() ? " on" : ""}`}
+            onClick={() => setFilter(cat.toLowerCase())}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
 
-      {/* Cards grid - populated by useEffect */}
-      <div className="inf-grid" id="infGrid" />
+      {/* Influencer cards grid */}
+      <div className="inf-grid">
+        {filtered.map((inf) => (
+          <div key={inf.n} className="icard">
+            <div className="icard-photo">
+              {/* Emoji only — no image */}
+              <div
+                className="icard-img"
+                style={{ background: `linear-gradient(135deg,${inf.bg},#0d0d0d)` }}
+              >
+                {inf.e}
+              </div>
+              <div className="icard-ov">
+                <div className="ov-f">{inf.f}</div>
+                <div className="ov-er">Engagement: {inf.er}</div>
+                <div className="ov-plats">
+                  <span className="plat ig">📸 {inf.ig}</span>
+                  <span className="plat yt">▶ {inf.yt}</span>
+                </div>
+                <button
+                  type="button"
+                  className="ov-cta"
+                  onClick={(ev) => { ev.stopPropagation(); setSelected(inf); }}
+                >
+                  📊 View Insights
+                </button>
+              </div>
+            </div>
+            <div className="icard-info">
+              <div className="icard-name">{inf.n}</div>
+              <div className="icard-cat">{inf.cl}</div>
+              <div className="icard-meta">
+                <span>📸 {inf.ig}</span>
+                <span className="ds" />
+                <span>{inf.er} ER</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div style={{ textAlign: "center", marginTop: 36 }}>
         <button className="btn btn-o">View More Creators ↓</button>
       </div>
+
+      {/* Creator detail modal */}
+      {selected && (
+        <div
+          className="modal open"
+          onClick={() => setSelected(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setSelected(null)}>✕</button>
+            {/* Emoji avatar in modal */}
+            <div
+              className="creator-modal-fallback"
+              style={{
+                background: `linear-gradient(135deg,${selected.bg},#0d0d0d)`,
+                fontSize: 72,
+                width: 120,
+                height: 120,
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 16px",
+              }}
+            >
+              {selected.e}
+            </div>
+            <div className="modal-title">{selected.n}</div>
+            <div className="modal-sub">{selected.cl} · {selected.f} · {selected.er} ER</div>
+            <div className="ov-plats" style={{ marginTop: 8, justifyContent: "center" }}>
+              <span className="plat ig">📸 {selected.ig}</span>
+              <span className="plat yt">▶ {selected.yt}</span>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

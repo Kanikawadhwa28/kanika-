@@ -88,7 +88,7 @@ export default function VideoGallery() {
   }, []);
 
   return (
-    <section className="vid-bg reveal">
+    <section id="video-gallery" className="vid-bg reveal">
       <div className="tc" style={{ marginBottom: 44 }}>
         <span className="stag">Portfolio</span>
         <h2 className="sh">Our <em>Recent Work</em> — Brands We Work With</h2>

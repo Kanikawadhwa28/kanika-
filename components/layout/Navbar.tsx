@@ -1,5 +1,7 @@
 "use client";
 
+import BrandLogo from "@/components/ui/BrandLogo";
+
 // Dropdown menu data - easy to edit here without touching JSX
 const NAV_ITEMS = [
   {
@@ -43,14 +45,6 @@ const NAV_ITEMS = [
     ],
   },
   {
-    label: "Pricing",
-    links: [
-      { icon: "🆓", text: "Free Plan", href: "/#pricing" },
-      { icon: "⚡", text: "Growth Plan", href: "/#pricing" },
-      { icon: "🏢", text: "Enterprise", href: "/#pricing" },
-    ],
-  },
-  {
     label: "Contact",
     links: [
       { icon: "👥", text: "Meet the Team", href: "/team" },
@@ -73,7 +67,10 @@ export default function Navbar() {
         <div className="nav-inner">
           {/* Logo */}
           <a href="/" className="logo">
-            Influence<em>IN</em>
+            <BrandLogo />
+            <span>
+              Avenue <em>Marketing Agency</em>
+            </span>
             <div className="logo-dot" />
           </a>
 
@@ -109,7 +106,7 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Right side: badge + buttons + hamburger */}
+          {/* Right side: badge + primary CTA + hamburger */}
           <div className="nav-r">
             <div className="nav-badge">
               <span className="nav-badge-fire">🔥</span>
@@ -118,8 +115,9 @@ export default function Navbar() {
                 <div className="nav-badge-lbl">Creators</div>
               </div>
             </div>
-            <a href="#" className="btn-ghost">Log in</a>
-            <a href="/for-brands" className="btn-cta">Start for Free</a>
+            <a href="/contact" className="btn-cta">
+              Talk to Us
+            </a>
 
             {/* Hamburger - only visible on mobile */}
             <div className="hbg" onClick={() => document.getElementById("mobNav")?.classList.toggle("open")}>
@@ -129,16 +127,22 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile nav drawer */}
+      {/* Mobile nav drawer with sub-links */}
       <div className="mob-nav" id="mobNav">
-        <a href="/#top-creators">Top Creators</a>
-        <a href="/for-creators">For Creators</a>
-        <a href="/platform#products">Products</a>
-        <a href="/platform#work">Our Work</a>
-        <a href="/#pricing">Pricing</a>
-        <a href="/contact">Contact</a>
-        <a href="/for-brands" style={{ color: "var(--gold)", marginTop: 22, fontSize: 20 }}>
-          Start for Free →
+        {NAV_ITEMS.map((item) => (
+          <div key={item.label} style={{ marginBottom: 8 }}>
+            <div style={{ fontFamily: "var(--disp)", fontSize: 18, fontWeight: 700, padding: "10px 0" }}>
+              {item.label}
+            </div>
+            {item.links.map((link) => (
+              <a key={link.text} href={link.href} style={{ paddingLeft: 8, fontSize: 15 }}>
+                {link.text}
+              </a>
+            ))}
+          </div>
+        ))}
+        <a href="/contact" style={{ color: "var(--gold)", marginTop: 10, fontSize: 18 }}>
+          Talk to Us →
         </a>
       </div>
     </>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 
 // Each tab panel content
 const TABS = [
@@ -11,9 +12,11 @@ const TABS = [
     rest: "— Instantly",
     desc: "Search 7,50,000+ verified influencers with 30+ filters. Audience demographics, location, engagement quality, fake follower detection — all in one place.",
     features: ["30+ advanced search filters", "Fake follower AI detection", "Upcoming creator discovery", "Audience demographic breakdown"],
-    cta: "SIGNUP FOR FREE →",
+    cta: "ARE YOU A BRAND →",
+    ctaHref: "/for-brands",
     icon: "🔍",
-    mockLabel: "Creator Discovery Dashboard",
+    image: "/mockups/1_discover.png",
+    imageAlt: "Creator Discovery Dashboard",
   },
   {
     label: "💲 Compare Prices",
@@ -22,9 +25,11 @@ const TABS = [
     rest: "a Creator Again",
     desc: "Real-time Fair Price Index benchmarks 7,50,000+ creators. Know market rates before you negotiate — save up to 40% on every campaign budget.",
     features: ["Real-time rate benchmarking", "Category-wise comparisons", "Negotiation leverage data", "Historical pricing trends"],
-    cta: "CHECK FAIR PRICE →",
+    cta: "CHECK FAIR PRICE INDEX →",
+    ctaHref: "/#split-fair-price",
     icon: "💲",
-    mockLabel: "Fair Price Index Dashboard",
+    image: "/mockups/2_compare_prices.png",
+    imageAlt: "Fair Price Index Dashboard",
   },
   {
     label: "🎯 Track Competitors",
@@ -33,9 +38,11 @@ const TABS = [
     rest: "Playbook",
     desc: "See exactly which creators and platforms your competitors are using. Reverse-engineer their strategy and stay two steps ahead.",
     features: ["Competitor creator mapping", "Platform spend analysis", "Share of voice tracking", "Content format insights"],
-    cta: "TRY IT FREE →",
+    cta: "TALK TO US →",
+    ctaHref: "/contact",
     icon: "🎯",
-    mockLabel: "Competitor Tracking Dashboard",
+    image: "/mockups/3_track_competitors.png",
+    imageAlt: "Competitor Tracking Dashboard",
   },
   {
     label: "📊 Measure ROI",
@@ -44,9 +51,11 @@ const TABS = [
     rest: "— Not Just Views",
     desc: "Track every campaign at creator level in real-time. From awareness to conversions — auto-generated reports that your CFO and CMO will both love.",
     features: ["Creator-level ROI tracking", "Revenue attribution", "Real-time performance data", "One-click PDF reports"],
-    cta: "START MEASURING →",
+    cta: "WE ARE HERE TO HELP →",
+    ctaHref: "/contact",
     icon: "📊",
-    mockLabel: "Campaign Reporting Dashboard",
+    image: "/mockups/4_measure_roi.png",
+    imageAlt: "Campaign Reporting Dashboard",
   },
 ];
 
@@ -68,7 +77,7 @@ export default function FeaturesSection() {
   }, []);
 
   return (
-    <section className="feat-bg reveal">
+    <section id="features" className="feat-bg reveal">
       {/* Section header */}
       <div className="tc" style={{ marginBottom: 36 }}>
         <span className="stag">Platform</span>
@@ -100,12 +109,23 @@ export default function FeaturesSection() {
             <ul className="flist">
               {tab.features.map((f) => <li key={f}>{f}</li>)}
             </ul>
-            <a href="#" className="btn btn-y">{tab.cta}</a>
+            <a href={tab.ctaHref} className="btn btn-y">{tab.cta}</a>
           </div>
           <div className="tc-img">
-            <div className="tc-mock">
-              <span>{tab.icon}</span>
-              <p>{tab.mockLabel}</p>
+            <div className="tc-mock-img">
+              <img
+                src={tab.image}
+                alt={tab.imageAlt}
+                width={500}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: "14px",
+                  border: "1px solid rgba(255,215,0,0.18)",
+                  boxShadow: "0 8px 40px rgba(255,215,0,0.08)",
+                  display: "block",
+                }}
+              />
             </div>
           </div>
         </div>
