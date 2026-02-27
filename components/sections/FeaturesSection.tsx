@@ -15,7 +15,7 @@ const TABS = [
     cta: "ARE YOU A BRAND →",
     ctaHref: "/for-brands",
     icon: "🔍",
-    image: "/mockups/discover.png",
+    image: "/mockups/1_discover.png",
     imageAlt: "Creator Discovery Dashboard",
   },
   {
@@ -28,7 +28,7 @@ const TABS = [
     cta: "CHECK FAIR PRICE INDEX →",
     ctaHref: "/#split-fair-price",
     icon: "💲",
-    image: "/mockups/compare-prices.png",
+    image: "/mockups/2_compare_prices.png",
     imageAlt: "Fair Price Index Dashboard",
   },
   {
@@ -41,7 +41,7 @@ const TABS = [
     cta: "TALK TO US →",
     ctaHref: "/contact",
     icon: "🎯",
-    image: "/mockups/track-competitors.png",
+    image: "/mockups/3_track_competitors.png",
     imageAlt: "Competitor Tracking Dashboard",
   },
   {
@@ -54,7 +54,7 @@ const TABS = [
     cta: "WE ARE HERE TO HELP →",
     ctaHref: "/contact",
     icon: "📊",
-    image: "/mockups/measure-roi.png",
+    image: "/mockups/4_measure_roi.png",
     imageAlt: "Campaign Reporting Dashboard",
   },
 ];
@@ -113,11 +113,10 @@ export default function FeaturesSection() {
           </div>
           <div className="tc-img">
             <div className="tc-mock-img">
-              <Image
+              <img
                 src={tab.image}
                 alt={tab.imageAlt}
-                width={520}
-                height={380}
+                width={500}
                 style={{
                   width: "100%",
                   height: "auto",
@@ -126,7 +125,6 @@ export default function FeaturesSection() {
                   boxShadow: "0 8px 40px rgba(255,215,0,0.08)",
                   display: "block",
                 }}
-                priority={i === 0}
               />
             </div>
           </div>

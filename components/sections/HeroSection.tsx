@@ -5,7 +5,7 @@ import { useEffect } from "react";
 // The hero manages its own slider logic inside useEffect
 export default function HeroSection() {
   useEffect(() => {
-    let currentSlide = 0;
+    let currentSlide = 2;
     const slides = document.querySelectorAll<HTMLElement>(".slide");
     const dots = document.querySelectorAll<HTMLElement>(".hdot");
     let autoPlay: ReturnType<typeof setInterval> | null = null;
@@ -56,11 +56,8 @@ export default function HeroSection() {
       </div>
 
       {/* Slide 1: Read Report, Watch Demo */}
-      <div className="slide on">
+      <div className="slide">
         <div className="slide-bg" style={{ background: "linear-gradient(135deg,#1a0e00,#0d0600,#000)" }}>🌟</div>
-        <div className="slide-barter-logo">
-            <img src="/images/logo/logo.png" alt="" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-          </div>
         <div className="slide-ov" />
         <div className="slide-body">
           <div className="slide-chip">📈 India&apos;s #1 Platform</div>
@@ -81,9 +78,6 @@ export default function HeroSection() {
       {/* Slide 2: Talk to Us, View Case Study */}
       <div className="slide">
         <div className="slide-bg" style={{ background: "linear-gradient(135deg,#0a0800,#1a1300,#000)" }}>🧳</div>
-        <div className="slide-barter-logo">
-            <img src="/images/logo/logo.png" alt="" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-          </div>
         <div className="slide-ov" />
         <div className="slide-body">
           <div className="slide-chip">🧳 Samsonite × Avenue Marketing Agency</div>
@@ -102,7 +96,7 @@ export default function HeroSection() {
       </div>
 
       {/* Slide 3: Barter Collab — our role, brand logo */}
-      <div className="slide slide-barter">
+      <div className="slide slide-barter on">
         <div className="slide-bg slide-bg-barter" style={{ background: "linear-gradient(135deg,#0e0800,#1a0f00,#000)" }}>
           <span className="slide-barter-emoji">🤝</span>
           <div className="slide-barter-logo">
@@ -129,9 +123,6 @@ export default function HeroSection() {
       {/* Slide 4: Fashion Icons (generalised, replaces BGMI) */}
       <div className="slide">
         <div className="slide-bg" style={{ background: "linear-gradient(135deg,#1a0a14,#0a0508,#000)" }}>👗</div>
-        <div className="slide-barter-logo">
-            <img src="/images/logo/logo.png" alt="" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-          </div>
         <div className="slide-ov" />
         <div className="slide-body">
           <div className="slide-chip">👗 Fashion & Lifestyle</div>
@@ -150,9 +141,9 @@ export default function HeroSection() {
       </div>
 
       <div className="hero-dots">
+        <div className="hdot" />
+        <div className="hdot" />
         <div className="hdot on" />
-        <div className="hdot" />
-        <div className="hdot" />
         <div className="hdot" />
       </div>
     </section>
