@@ -13,7 +13,6 @@ import StatsBand from "@/components/sections/StatsBand";
 import VideoGallery from "@/components/sections/VideoGallery";
 import CampaignTypes from "@/components/sections/CampaignTypes";
 import SplitPlatform from "@/components/sections/SplitPlatform";
-import PricingSection from "@/components/sections/PricingSection";
 import TeamSection from "@/components/sections/TeamSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import BlogSection from "@/components/sections/BlogSection";
@@ -36,7 +35,6 @@ export default function Home() {
       <VideoGallery />
       <CampaignTypes />
       <SplitPlatform />
-      <PricingSection />
       <TeamSection />
       <TestimonialsSection />
       <BlogSection />

@@ -17,9 +17,6 @@ export default function Modal() {
         <div style={{ fontSize: 50, marginBottom: 14 }} id="mIco">🎬</div>
         <div className="modal-title" id="mTitle">Campaign</div>
         <div className="modal-sub" id="mSub">Details...</div>
-        <a href="#" className="btn btn-y" style={{ marginTop: 6 }}>
-          View Full Case Study →
-        </a>
       </div>
     </div>
   );

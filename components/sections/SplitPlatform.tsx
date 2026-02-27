@@ -18,12 +18,12 @@ export default function SplitPlatform() {
               <li>Creator contracts & payments</li>
               <li>Auto ROI reporting</li>
             </ul>
-            <a href="#" className="btn btn-y">SIGNUP NOW →</a>
+            <a href="/contact" className="btn btn-y">Sign In →</a>
           </div>
         </div>
   
         {/* Block 2: Fair Price Index */}
-        <div className="split rev">
+        <div id="split-fair-price" className="split rev">
           <div className="split-img">
             <div className="split-mock"><span>💲</span><p>Fair Price Index</p></div>
             <div className="sfloat f1"><div className="sfv">40%</div><div className="sfl">Cost Saved</div></div>
@@ -38,7 +38,7 @@ export default function SplitPlatform() {
               <li>Platform-wise benchmarks</li>
               <li>Tier-based pricing insights</li>
             </ul>
-            <a href="#" className="btn btn-y">CHECK FAIR PRICE →</a>
+            <a href="/#split-fair-price" className="btn btn-y">Check Fair Price →</a>
           </div>
         </div>
       </section>

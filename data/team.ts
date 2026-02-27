@@ -8,40 +8,33 @@ export type TeamMember = {
   instagramUrl: string;
 };
 
-// Core leadership team used on /team and /contact pages
+// Add profile images to public/images/creators/ or public/images/team/ — e.g. yaman-khan.png
 export const teamMembers: TeamMember[] = [
   {
-    id: "sunny",
-    name: "Mr. Sunny",
-    title: "Strategy Lead & Co-Founder",
-    emoji: "☀️",
-    bio:
-      "Leads creator strategy and brand alignment across campaigns. Focused on building long-term partnerships, not one-off promotions.",
-    shortBio:
-      "Leads creator strategy and long-term brand partnerships across key categories.",
-    instagramUrl: "#", // TODO: replace with real Instagram URL
-  },
-  {
-    id: "viraj",
-    name: "Mr. Viraj",
+    id: "yaman",
+    name: "Yaman Khan",
     title: "Founder",
     emoji: "🦁",
-    bio:
-      "Oversees campaign execution and creator network. Ensures seamless delivery from brief to performance.",
-    shortBio:
-      "Owns campaign execution end-to-end and scales the creator network sustainably.",
-    instagramUrl: "#", // TODO: replace with real Instagram URL
+    bio: "Oversees strategy, campaign execution and creator network. Ensures seamless delivery from brief to performance.",
+    shortBio: "Oversees strategy and scales the creator network sustainably.",
+    instagramUrl: "https://www.instagram.com/avenue_marketing_agency?igsh=MXd3MjZtemptMjh0cw==",
+  },
+  {
+    id: "sunny",
+    name: "Sunny Kumar",
+    title: "Co-founder",
+    emoji: "☀️",
+    bio: "Leads creator strategy and brand alignment across campaigns. Focused on building long-term partnerships, not one-off promotions.",
+    shortBio: "Leads creator strategy and long-term brand partnerships across key categories.",
+    instagramUrl: "https://www.instagram.com/itskumarsunny?igsh=MTBqY3B6Z2N2dWhidg==",
   },
   {
     id: "shubham",
-    name: "Mr. Shubham",
-    title: "Creative Director",
+    name: "Shubham Chaudhary",
+    title: "Creative Lead",
     emoji: "🎨",
-    bio:
-      "Bridges brand goals with creator authenticity. Hands-on across strategy, selection and execution.",
-    shortBio:
-      "Ensures every campaign feels authentic to creators while delivering brand KPIs.",
-    instagramUrl: "#", // TODO: replace with real Instagram URL
+    bio: "Bridges brand goals with creator authenticity. Hands-on across strategy, selection and execution.",
+    shortBio: "Ensures every campaign feels authentic to creators while delivering brand KPIs.",
+    instagramUrl: "https://www.instagram.com/shubhamchaudhary14000?igsh=YnNqMmJvYnhrN3Nq",
   },
 ];
-

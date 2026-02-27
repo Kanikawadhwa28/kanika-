@@ -1,26 +1,42 @@
- "use client";
+"use client";
 
+import { useState, FormEvent, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import PageHero from "@/components/ui/PageHero";
 import TeamCards from "@/components/ui/TeamCards";
-import type { FormEvent } from "react";
 
-export default function ContactPage() {
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+function ContactForm() {
+  const searchParams = useSearchParams();
+  const presetQuery = searchParams.get("query") || "";
+  const isCreator = searchParams.get("creator") === "1";
+
+  const [sendStatus, setSendStatus] = useState<"idle" | "sending" | "sent" | "more">("idle");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (sendStatus === "sending") return;
+
     const form = e.currentTarget;
     const data = new FormData(form);
     const name = (data.get("name") || "").toString();
     const email = (data.get("email") || "").toString();
-    const query = (data.get("query") || "").toString();
+    const query = (data.get("query") || presetQuery || "").toString();
     const phone = (data.get("phone") || "").toString();
     const message = (data.get("message") || "").toString();
 
-    const subject = encodeURIComponent("New enquiry from InfluenceIN website");
+    setSendStatus("sending");
+
+    const subject = encodeURIComponent("New enquiry from Avenue Marketing Agency website");
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nQuery: ${query}\n\nMessage:\n${message}`
     );
 
-    window.location.href = `mailto:kanika.28.w@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:teamavenueofficial@gmail.com?subject=${subject}&body=${body}`;
+
+    setTimeout(() => {
+      setSendStatus("sent");
+      setTimeout(() => setSendStatus("more"), 1500);
+    }, 300);
   };
 
   return (
@@ -56,16 +72,38 @@ export default function ContactPage() {
             </div>
             <div className="contact-field">
               <label htmlFor="query">Query</label>
-              <input id="query" name="query" placeholder="Campaign brief, partnership, support..." />
+              <input
+                id="query"
+                name="query"
+                defaultValue={presetQuery || (isCreator ? "Creator / Join as creator" : "")}
+                placeholder="Campaign brief, partnership, support..."
+              />
             </div>
           </div>
           <div className="contact-field">
             <label htmlFor="message">Message*</label>
             <textarea id="message" name="message" required rows={4} />
           </div>
-          <button type="submit" className="btn btn-y">
-            Send Email →
-          </button>
+
+          {sendStatus === "idle" && (
+            <button type="submit" className="btn btn-y">
+              Send Email →
+            </button>
+          )}
+          {sendStatus === "sending" && (
+            <div className="contact-status">Sending…</div>
+          )}
+          {sendStatus === "sent" && (
+            <div className="contact-status contact-status-ok">Sent ✓</div>
+          )}
+          {sendStatus === "more" && (
+            <>
+              <p className="contact-more">Do you have something more to send?</p>
+              <button type="submit" className="btn btn-y">
+                Send Again →
+              </button>
+            </>
+          )}
         </form>
       </section>
 
@@ -75,38 +113,17 @@ export default function ContactPage() {
             <div className="contact-emoji">📅</div>
             <h3>Schedule a Meeting</h3>
             <p>Free 30-minute discovery call. Pick a time that works for you.</p>
-            <a
-              href="#"
-              className="btn btn-y"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href="#" className="btn btn-y" target="_blank" rel="noreferrer">
               Book a Call →
-              {/* TODO: replace href with real Calendly URL */}
             </a>
             <span className="contact-note">No commitment required.</span>
-          </div>
-          <div className="contact-card">
-            <div className="contact-emoji">📋</div>
-            <h3>Fill Our Form</h3>
-            <p>Tell us what you need. We read every submission personally.</p>
-            <a
-              href="#"
-              className="btn btn-y"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Open Google Form →
-              {/* TODO: replace href with real Google Form URL */}
-            </a>
-            <span className="contact-note">We reply within 24 hours.</span>
           </div>
           <div className="contact-card">
             <div className="contact-emoji whatsapp">💬</div>
             <h3>Chat on WhatsApp</h3>
             <p>Quickest way to reach us directly.</p>
             <a
-              href="https://wa.me/917015008579?text=Hi%20InfluenceIN!%20I%20came%20across%20your%20platform%20and%20I%27m%20interested%20in%20discussing%20a%20potential%20campaign%20or%20collaboration.%20Could%20we%20connect%3F"
+              href="https://wa.me/919801458766?text=Hi%20Avenue%20Marketing%20Agency!%20I%20came%20across%20your%20website%20and%20I%27m%20interested%20in%20discussing%20a%20potential%20campaign%20or%20collaboration.%20Could%20we%20connect%3F"
               className="btn btn-y"
               target="_blank"
               rel="noreferrer"
@@ -135,3 +152,10 @@ export default function ContactPage() {
   );
 }
 
+export default function ContactPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: 100, textAlign: "center" }}>Loading…</div>}>
+      <ContactForm />
+    </Suspense>
+  );
+}

@@ -40,7 +40,7 @@ export default function PlatformPage() {
       <PageHero
         tag="Platform"
         h1="One Platform. Every Tool You Need."
-        subtitle="From creator discovery to Fair Price Index, competitor tracking and reporting — InfluenceIN is your full-stack influencer OS."
+        subtitle="From creator discovery to Fair Price Index, competitor tracking and reporting — Avenue Marketing Agency is your full-stack influencer OS."
         buttons={[{ label: "Start Free →", href: "#", variant: "gold" }]}
       />
 
@@ -84,7 +84,7 @@ export default function PlatformPage() {
                 <div className="prod-text">
                   <h3>📊 Creator Discovery</h3>
                   <p>Find your perfect creator instantly with 30+ filters, fake follower detection and engagement scoring.</p>
-                  <a href="#" className="btn btn-y">Try Free →</a>
+                  <a href="/for-creators" className="btn btn-y">Try for Free →</a>
                   <span className="prod-badge">7,50,000+ Creators</span>
                 </div>
               </div>
@@ -92,7 +92,7 @@ export default function PlatformPage() {
                 <div className="prod-text">
                   <h3>💲 Fair Price Index</h3>
                   <p>Never overpay a creator again with real-time benchmarks, tier-based pricing and negotiation data.</p>
-                  <a href="#" className="btn btn-y">Check Fair Price →</a>
+                  <a href="/#split-fair-price" className="btn btn-y">Check Fair Price →</a>
                   <span className="prod-badge">Save up to 40%</span>
                 </div>
                 <div className="prod-mock">
@@ -119,7 +119,7 @@ export default function PlatformPage() {
                 <div className="prod-text">
                   <h3>🎯 Competitor Tracker</h3>
                   <p>Spy on your competitors&apos; playbook with creator mapping, platform spend analysis and share-of-voice insights.</p>
-                  <a href="#" className="btn btn-y">Start Tracking →</a>
+                  <a href="/contact" className="btn btn-y">Start Tracking →</a>
                   <span className="prod-badge">Real-time Intel</span>
                 </div>
               </div>
@@ -204,19 +204,19 @@ export default function PlatformPage() {
                 <div className="guide-emoji">📘</div>
                 <h3>Beginner&apos;s Guide to Influencer Marketing</h3>
                 <p>Everything a brand needs before their first campaign.</p>
-                <a href="#" className="btn btn-y">Read Guide →</a>
+                <a href="/contact" className="btn btn-y">Read Guide →</a>
               </div>
               <div className="guide-card green">
                 <div className="guide-emoji">📗</div>
                 <h3>The Complete Creator Brief Template</h3>
                 <p>Get 3x better content with this step-by-step template.</p>
-                <a href="#" className="btn btn-y">Download Free →</a>
+                <a href="/contact" className="btn btn-y">Download Free →</a>
               </div>
               <div className="guide-card orange">
                 <div className="guide-emoji">📙</div>
                 <h3>ROI Measurement Playbook</h3>
                 <p>Track and report ROI in a way your CFO will love.</p>
-                <a href="#" className="btn btn-y">Get Playbook →</a>
+                <a href="/contact" className="btn btn-y">Get Playbook →</a>
               </div>
             </div>
           </section>

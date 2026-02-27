@@ -23,8 +23,8 @@ export default function ForCreatorsPage() {
       <PageHero
         tag="For Creators"
         h1="Get Discovered. Get Paid. Grow Faster."
-        subtitle="Join 7,50,000+ verified creators already earning with India's top brands on InfluenceIN."
-        buttons={[{ label: "Join for Free →", href: "#", variant: "gold" }]}
+        subtitle="Join 7,50,000+ verified creators already earning with India's top brands on Avenue Marketing Agency."
+        buttons={[]}
       />
 
       <section className="reveal" style={{ paddingTop: 10 }}>
@@ -40,7 +40,7 @@ export default function ForCreatorsPage() {
       <section className="reveal">
         <div className="tc" style={{ marginBottom: 26 }}>
           <span className="stag">Community</span>
-          <h2 className="sh">Creators Already on <em>InfluenceIN</em></h2>
+          <h2 className="sh">Creators Already on <em>Avenue Marketing Agency</em></h2>
           <p className="ssub" style={{ margin: "10px auto 0" }}>Hover any card to see their stats.</p>
           <span className="gold-bar" />
         </div>
@@ -86,8 +86,8 @@ export default function ForCreatorsPage() {
 
       <section className="reveal">
         <div className="tc" style={{ marginBottom: 32 }}>
-          <span className="stag">Why InfluenceIN</span>
-          <h2 className="sh">Why Creators Choose <em>InfluenceIN</em></h2>
+          <span className="stag">Why Avenue</span>
+          <h2 className="sh">Why Creators Choose <em>Avenue Marketing Agency</em></h2>
           <span className="gold-bar" />
         </div>
         <div className="benefit-grid">
@@ -128,7 +128,7 @@ export default function ForCreatorsPage() {
           <span className="gold-bar" />
         </div>
         <div style={{ textAlign: "center", marginTop: 30 }}>
-          <a href="#" className="btn btn-y">
+          <a href="/contact?creator=1&query=Creator" className="btn btn-y">
             Join as a Creator →
           </a>
         </div>

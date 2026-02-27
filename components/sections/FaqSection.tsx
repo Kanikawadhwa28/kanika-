@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 const FAQS = [
   {
-    q: "How does InfluenceIN verify its 7,50,000+ creators?",
+    q: "How does Avenue Marketing Agency verify its 7,50,000+ creators?",
     a: "Every creator goes through API-based extraction, our proprietary AI fake-follower detection model, and manual review for 100K+ accounts. Engagement data refreshes every 72 hours.",
   },
   {
