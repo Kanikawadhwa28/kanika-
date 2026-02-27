@@ -44,16 +44,52 @@ export default function ForCreatorsPage() {
           <p className="ssub" style={{ margin: "10px auto 0" }}>Hover any card to see their stats.</p>
           <span className="gold-bar" />
         </div>
+
         <div className="creator-grid-page">
           {visibleCreators.map((c) => (
             <div key={c.name} className="icard">
               <div className="icard-photo">
+                {/* Image with emoji fallback */}
                 <div
                   className="icard-img"
-                  style={{ background: `linear-gradient(135deg,${c.bg},#0d0d0d)` }}
+                  style={{ background: `linear-gradient(135deg,${c.bg},#0d0d0d)`, position: "relative" }}
                 >
-                  {c.emoji}
+                  {c.image ? (
+                    <img
+                      src={`/images/creators/${c.image}`}
+                      alt={c.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        position: "absolute",
+                        inset: 0,
+                      }}
+                      onError={(e) => {
+                        // Hide broken image, show emoji fallback
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = "none";
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = "flex";
+                      }}
+                    />
+                  ) : null}
+                  {/* Emoji fallback — hidden if image loads */}
+                  <span
+                    style={{
+                      display: c.image ? "none" : "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                      height: "100%",
+                      fontSize: 48,
+                    }}
+                  >
+                    {c.emoji}
+                  </span>
                 </div>
+
+                {/* Hover overlay */}
                 <div className="icard-ov">
                   <div className="ov-f">{c.audience}</div>
                   <div className="ov-er">Audience across Instagram & YouTube</div>
@@ -64,6 +100,7 @@ export default function ForCreatorsPage() {
                   <span className="ov-cta">View Profile →</span>
                 </div>
               </div>
+
               <div className="icard-info">
                 <div className="icard-name">{c.name}</div>
                 <div className="icard-meta">
@@ -73,6 +110,7 @@ export default function ForCreatorsPage() {
             </div>
           ))}
         </div>
+
         <div style={{ textAlign: "center", marginTop: 32 }}>
           <button
             type="button"
@@ -139,4 +177,3 @@ export default function ForCreatorsPage() {
     </>
   );
 }
-

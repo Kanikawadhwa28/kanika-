@@ -1,23 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import { creators } from "@/data/creators";
 
-const CREATORS = [
-  { n: "Zayan Saifi", aud: "11.4M+", e: "🌟", bg: "#1a0a00" },
-  { n: "Bharti Singh", aud: "9.4M+", e: "😄", bg: "#1a000a" },
-  { n: "Nazim Ahmad", aud: "6.7M+", e: "🎭", bg: "#001a0a" },
-  { n: "Wasim Ahmad", aud: "3.1M+", e: "🎬", bg: "#0a001a" },
-  { n: "Nishu Tiwari", aud: "1.6M+", e: "💃", bg: "#1a1000" },
-  { n: "Harsh Limbachiyaa", aud: "1.6M+", e: "😂", bg: "#001018" },
-  { n: "Roonak Sachdeva", aud: "1.2M+", e: "✨", bg: "#180010" },
-  { n: "Abhishek Kashyap", aud: "1M+", e: "🎯", bg: "#001a14" },
-  { n: "Mohit Narang", aud: "569K+", e: "👗", bg: "#140010" },
-  { n: "Soniya Rawat", aud: "556K+", e: "💄", bg: "#1a0808" },
-  { n: "Mayank Kaushik", aud: "227K+", e: "📱", bg: "#080a1a" },
-  { n: "Aayush Sapra", aud: "204K+", e: "🏋️", bg: "#001810" },
-];
-
-const PER_PAGE = 4; // Show 4 cards at a time
+const PER_PAGE = 4; // Number of creator cards visible at once
 
 export default function CreatorNetwork() {
   useEffect(() => {
@@ -25,36 +11,44 @@ export default function CreatorNetwork() {
     const dotsContainer = document.getElementById("csDots");
     if (!track || !dotsContainer) return;
 
-    const totalPages = Math.ceil(CREATORS.length / PER_PAGE);
+    const totalPages = Math.ceil(creators.length / PER_PAGE);
     let currentPage = 0;
 
-    // Render the 4 cards for the current page
+    // Build and inject creator cards for the current page
     const renderPage = () => {
       const start = currentPage * PER_PAGE;
-      const slice = CREATORS.slice(start, start + PER_PAGE);
+      const slice = creators.slice(start, start + PER_PAGE);
 
-      track.innerHTML = slice
-        .map(
-          (c) => `
-          <div class="ccard">
-            <div class="ccard-photo" style="background:linear-gradient(135deg,${c.bg},#0a0a0a);">${c.e}</div>
-            <div class="ccard-name">${c.n}</div>
-            <div class="ccard-role">Influencer</div>
-            <div class="ccard-aud">
-              <span class="ccard-aud-lbl">Audience</span>
-              <div class="ccard-aud-val">${c.aud}</div>
-            </div>
-          </div>`
-        )
-        .join("");
+      track.innerHTML = slice.map((c) => `
+        <div class="ccard">
+          <!-- Photo: shows image if available, falls back to emoji -->
+          <div class="ccard-photo" style="background:linear-gradient(135deg,${c.bg},#0a0a0a);">
+            ${c.image
+              ? `<img
+                  src="/images/creators/${c.image}"
+                  alt="${c.name}"
+                  style="width:100%;height:100%;object-fit:cover;border-radius:50%;"
+                  onerror="this.style.display='none'"
+                />`
+              : c.emoji
+            }
+          </div>
+          <div class="ccard-name">${c.name}</div>
+          <div class="ccard-role">Influencer</div>
+          <div class="ccard-aud">
+            <span class="ccard-aud-lbl">Audience</span>
+            <div class="ccard-aud-val">${c.audience}</div>
+          </div>
+        </div>
+      `).join("");
 
-      // Update dot active state
+      // Highlight the active dot for the current page
       dotsContainer.querySelectorAll(".csdot").forEach((dot, i) => {
         dot.classList.toggle("on", i === currentPage);
       });
     };
 
-    // Create navigation dots
+    // Dynamically create one dot per page
     for (let i = 0; i < totalPages; i++) {
       const dot = document.createElement("div");
       dot.className = "csdot" + (i === 0 ? " on" : "");
@@ -62,15 +56,18 @@ export default function CreatorNetwork() {
       dotsContainer.appendChild(dot);
     }
 
+    // Initial render
     renderPage();
 
-    // Arrow buttons
+    // Left arrow — go to previous page (wraps around)
     document.querySelectorAll<HTMLElement>(".cs-arr.l").forEach(
       (btn) => (btn.onclick = () => {
         currentPage = (currentPage - 1 + totalPages) % totalPages;
         renderPage();
       })
     );
+
+    // Right arrow — go to next page (wraps around)
     document.querySelectorAll<HTMLElement>(".cs-arr.r").forEach(
       (btn) => (btn.onclick = () => {
         currentPage = (currentPage + 1) % totalPages;
@@ -78,17 +75,19 @@ export default function CreatorNetwork() {
       })
     );
 
-    // Auto advance every 5 seconds
+    // Auto-advance to next page every 5 seconds
     const timer = setInterval(() => {
       currentPage = (currentPage + 1) % totalPages;
       renderPage();
     }, 5000);
 
+    // Cleanup interval on component unmount
     return () => clearInterval(timer);
   }, []);
 
   return (
     <section className="creator-sec reveal">
+      {/* Section header */}
       <div className="tc" style={{ marginBottom: 40 }}>
         <span className="stag">Creator Network</span>
         <h2 className="sh">Our <em>Top Creators</em> — Hover to Connect</h2>
@@ -98,24 +97,26 @@ export default function CreatorNetwork() {
       </div>
 
       <div className="creator-slider">
-        {/* Left arrow */}
+        {/* Left navigation arrow */}
         <div className="cs-arr l">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" strokeWidth="2.5" stroke="currentColor">
             <polyline points="15 18 9 12 15 6" />
           </svg>
         </div>
 
-        {/* Right arrow */}
+        {/* Right navigation arrow */}
         <div className="cs-arr r">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" strokeWidth="2.5" stroke="currentColor">
             <polyline points="9 18 15 12 9 6" />
           </svg>
         </div>
 
+        {/* Cards are injected here by renderPage() */}
         <div className="cs-viewport">
           <div className="cs-track" id="csTrack" />
         </div>
 
+        {/* Pagination dots — injected dynamically */}
         <div className="cs-dots" id="csDots" />
       </div>
     </section>
