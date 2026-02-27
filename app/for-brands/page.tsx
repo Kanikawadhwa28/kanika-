@@ -47,6 +47,7 @@ export default function ForBrandsPage() {
         ]}
       />
 
+      {/* Hero badges */}
       <section className="reveal" style={{ paddingTop: 10 }}>
         <div className="hero-badges">
           {HERO_BADGES.map((b, i) => (
@@ -57,12 +58,14 @@ export default function ForBrandsPage() {
         </div>
       </section>
 
+      {/* 3D Brand Carousel */}
       <section className="reveal">
         <div className="tc" style={{ marginBottom: 40 }}>
           <span className="stag">Brands</span>
           <h2 className="sh">Trusted by India&apos;s Fastest-Growing Brands</h2>
           <span className="gold-bar" />
         </div>
+
         <div className="brand-3d-wrap">
           <div className="brand-3d">
             <div className="brand-ring">
@@ -73,7 +76,24 @@ export default function ForBrandsPage() {
                   style={{ "--i": i } as CSSProperties}
                 >
                   <div className="brand-card-title">
-                    <span>{b.emoji ?? ""}</span>
+                    {/* Show brand image if available, fallback to emoji */}
+                    {b.image ? (
+                      <img
+                        src={`/images/brands/${b.image}`}
+                        alt={b.name}
+                        style={{
+                          width: 28,
+                          height: 28,
+                          objectFit: "contain",
+                          borderRadius: 4,
+                        }}
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = "none";
+                        }}
+                      />
+                    ) : (
+                      <span>{b.emoji ?? ""}</span>
+                    )}
                     {b.name}
                   </div>
                   <div className="brand-card-stat">{b.stat}</div>
@@ -82,6 +102,8 @@ export default function ForBrandsPage() {
             </div>
           </div>
         </div>
+
+        {/* Summary stats below carousel */}
         <div className="brand-stats">
           <div className="brand-stat">
             <div className="brand-stat-val">₹500Cr+</div>
@@ -98,6 +120,7 @@ export default function ForBrandsPage() {
         </div>
       </section>
 
+      {/* Pain points */}
       <section className="reveal">
         <div className="tc" style={{ marginBottom: 32 }}>
           <span className="stag">Challenges</span>
@@ -115,6 +138,7 @@ export default function ForBrandsPage() {
         </div>
       </section>
 
+      {/* How it works steps */}
       <section className="reveal">
         <div className="tc" style={{ marginBottom: 40 }}>
           <span className="stag">How It Works</span>
@@ -124,6 +148,7 @@ export default function ForBrandsPage() {
         <StepCards steps={STEPS} />
       </section>
 
+      {/* Case studies */}
       <section className="reveal">
         <div className="tc" style={{ marginBottom: 32 }}>
           <span className="stag">Case Studies</span>
@@ -148,6 +173,7 @@ export default function ForBrandsPage() {
         </div>
       </section>
 
+      {/* Campaign detail modal */}
       <CampaignModal
         campaignId={activeCampaignId}
         isOpen={!!activeCampaignId}
@@ -156,4 +182,3 @@ export default function ForBrandsPage() {
     </>
   );
 }
-
