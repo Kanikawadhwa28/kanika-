@@ -170,9 +170,6 @@ export default function ForCreatorsPage() {
             Join as a Creator →
           </a>
         </div>
-        <p style={{ marginTop: 18, fontSize: 10, color: "#555", maxWidth: 720, marginInline: "auto", lineHeight: 1.6 }}>
-          The content currently manifested within this digital domain is disseminated exclusively for representational and ornamental visualization, devoid of any immediate contractual, commercial, or affiliative implication. Notwithstanding its purely demonstrative disposition, we remain prospectively inclined toward the cultivation of mutually advantageous, strategically aligned brand affiliations, the materialization of which is contemplated at a subsequent juncture within the foreseeable continuum.
-        </p>
       </section>
     </>
   );

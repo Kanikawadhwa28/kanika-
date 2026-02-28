@@ -40,6 +40,8 @@ const FOOTER_COLS = [
   },
 ];
 
+const TERMS_TEXT = `All proprietary brand identifiers, creator-originated intellectual assets, and campaign-specific material disseminated across the digital infrastructure of this platform shall unequivocally remain under the exclusive proprietorial dominion of their respectively designated originating entities — Avenue Marketing Agency hereby categorically disclaims any assertion of ownership, co-ownership, or affiliated rights over any third-party intellectual property showcased, referenced, or otherwise represented herein. The brands, creators, and associated campaign executions exhibited hereinabove collectively encompass entities with whom Avenue Marketing Agency has engaged in direct, indirect, circumstantial, or prospectively anticipated collaborative undertakings, inclusive of those currently traversing the formalised onboarding continuum in anticipation of forthcoming strategic and commercial partnerships. The deliberate curation and public dissemination of said content serves an exclusively amplificatory purpose — specifically, the systematic augmentation of socio-digital visibility, the optimisation of deal-acquisition probability, and the facilitation of expansive, mutually beneficial professional network proliferation — with unconditional and unambiguous attribution ceremoniously accorded to all featured proprietorial parties without exception. Avenue Marketing Agency unwaveringly conducts the totality of its operational, commercial, and interpersonal engagements in strict accordance with an inviolable institutional ethos predicated upon trust, radical transparency, and scrupulous conscientious adherence to the intellectual, creative, and contractual rights and entitlements of every collaborating, affiliated, or prospectively associated entity. Should any disputes, apprehensions, or contentions materialise with respect to the representation, utilisation, or contextualisation of any featured content, brand identity, or creator-associated intellectual property, the immediate initiation of formal correspondence addressed to avenueteamofficial@gmail.com shall be received with the utmost urgency and resolved with uncompromising expedience and demonstrable good faith.`;
+
 export default function Footer() {
   const pathname = usePathname();
   const [showTerms, setShowTerms] = useState(false);
@@ -59,9 +61,6 @@ export default function Footer() {
     return "/";
   };
 
-  const termsText =
-    "The content currently manifested within this digital domain is disseminated exclusively for representational and ornamental visualization, devoid of any immediate contractual, commercial, or affiliative implication. Notwithstanding its purely demonstrative disposition, we remain prospectively inclined toward the cultivation of mutually advantageous, strategically aligned brand affiliations, the materialization of which is contemplated at a subsequent juncture within the foreseeable continuum.";
-
   const handleFooterClick = () => {
     const now = Date.now();
     if (now - lastClickTime < 400) {
@@ -77,9 +76,16 @@ export default function Footer() {
     setLastClickTime(now);
   };
 
+  // Terms link — feeds into the same 3-click counter
   const handleTermsClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    setShowTerms((prev) => !prev);
+    e.stopPropagation();
+    if (showTerms) {
+      setShowTerms(false);
+      setClickCount(0);
+    } else {
+      handleFooterClick();
+    }
   };
 
   const shouldShowTerms = showTerms && !pathname.startsWith("/for-creators");
@@ -97,31 +103,16 @@ export default function Footer() {
             meaningful barter collaborations — powered by data, run by experts.
           </p>
           <div className="socials">
-            <a
-              href="https://www.instagram.com/avenue_marketing_agency?igsh=MXd3MjZtemptMjh0cw=="
-              className="soc soc-ig"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Instagram"
-            >
+            <a href="https://www.instagram.com/avenue_marketing_agency?igsh=MXd3MjZtemptMjh0cw=="
+              className="soc soc-ig" target="_blank" rel="noreferrer" aria-label="Instagram">
               <InstagramIcon />
             </a>
-            <a
-              href="https://www.linkedin.com/company/avenue-marketing-agency"
-              className="soc soc-li"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-            >
+            <a href="https://www.linkedin.com/company/avenue-marketing-agency"
+              className="soc soc-li" target="_blank" rel="noreferrer" aria-label="LinkedIn">
               <LinkedInIcon />
             </a>
-            <a
-              href="https://www.facebook.com"
-              className="soc soc-fb"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Facebook"
-            >
+            <a href="https://www.facebook.com"
+              className="soc soc-fb" target="_blank" rel="noreferrer" aria-label="Facebook">
               <FacebookIcon />
             </a>
           </div>
@@ -132,9 +123,7 @@ export default function Footer() {
           <div key={col.title} className="ft-col">
             <h5>{col.title}</h5>
             {col.links.map((link) => (
-              <a key={link} href={getHref(link, col.title)}>
-                {link}
-              </a>
+              <a key={link} href={getHref(link, col.title)}>{link}</a>
             ))}
           </div>
         ))}
@@ -144,16 +133,24 @@ export default function Footer() {
         <p>© 2025 Avenue Marketing Agency. All rights reserved.</p>
         <div className="ft-bot-links">
           <a href="#">Privacy</a>
-          <a href="#" onClick={handleTermsClick}>
-            Terms
-          </a>
+          <a href="#" onClick={handleTermsClick}>Terms</a>
           <a href="#">Cookies</a>
         </div>
       </div>
 
+      {/* Terms — revealed on clicking Terms link or triple-clicking footer */}
       {shouldShowTerms && (
-        <p className="terms-text">
-          {termsText}
+        <p style={{
+          margin: "8px auto 0",
+          maxWidth: 860,
+          padding: "0 16px 16px",
+          fontSize: 9,
+          lineHeight: 1.6,
+          color: "var(--muted, #444)",
+          textAlign: "justify",
+          cursor: "default",
+        }}>
+          {TERMS_TEXT}
         </p>
       )}
     </footer>
