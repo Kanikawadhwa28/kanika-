@@ -3,20 +3,37 @@
 import { useState } from "react";
 
 export default function NewsletterSection() {
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const handleSubscribe = () => {
-    if (status === "sending") return;
+  const handleSubscribe = async () => {
+    if (status === "sending" || status === "sent") return;
     setStatus("sending");
 
-    const subject = encodeURIComponent("Newsletter subscribe — Avenue Marketing Agency");
-    const body = encodeURIComponent(
-      "Hey, visited website and clicked on subscribe."
-    );
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/avenueteamofficial@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          _subject: "Newsletter Subscribe — Avenue Marketing Agency",
+          message: "Someone visited the website and clicked Subscribe on the newsletter section.",
+          _captcha: "false",
+          _template: "table",
+        }),
+      });
 
-    window.location.href = `mailto:avenueteamofficial@gmail.com?subject=${subject}&body=${body}`;
-
-    setTimeout(() => setStatus("sent"), 200);
+      if (res.ok) {
+        setStatus("sent");
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 3000);
+      }
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
   };
 
   return (
@@ -29,16 +46,17 @@ export default function NewsletterSection() {
       <p className="ssub" style={{ textAlign: "center", margin: "10px auto 0" }}>
         Join 12,000+ marketers. No spam. Unsubscribe anytime.
       </p>
-      <div className="nl-form">
+      <div className="nl-form" style={{ display: "flex", justifyContent: "center" }}>
         <button
           type="button"
           className="btn btn-y"
           onClick={handleSubscribe}
-          disabled={status === "sending"}
+          disabled={status === "sending" || status === "sent"}
         >
-          {status === "idle" && "Subscribe →"}
+          {status === "idle"    && "Subscribe →"}
           {status === "sending" && "Sending…"}
-          {status === "sent" && "Sent ✓"}
+          {status === "sent"    && "Subscribed ✓"}
+          {status === "error"   && "Try again →"}
         </button>
       </div>
       <p className="nl-note">📋 Weekly insights • 📊 Campaign data • 🎯 Creator spotlights — every Tuesday</p>

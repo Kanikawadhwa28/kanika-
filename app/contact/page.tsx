@@ -5,6 +5,24 @@ import { useSearchParams } from "next/navigation";
 import PageHero from "@/components/ui/PageHero";
 import TeamCards from "@/components/ui/TeamCards";
 
+// ── WhatsApp SVG logo ─────────────────────────────────────────────────────────
+function WhatsAppIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 48 48"
+      width={size}
+      height={size}
+      style={{ display: "inline-block", verticalAlign: "middle", flexShrink: 0 }}
+      aria-hidden="true"
+    >
+      <path fill="#25D366" d="M4.9 43.3 7.6 33.5C5.9 31 5 28.1 5 25 5 13.9 13.9 5 25 5s20 8.9 20 20-8.9 20-20 20c-3 0-5.8-.7-8.3-1.9z"/>
+      <path fill="#fff" d="M19.3 16c-.4-.9-.8-.9-1.2-.9h-1c-.4 0-.9.1-1.4.7-.5.5-1.8 1.7-1.8 4.2s1.8 4.9 2.1 5.2c.2.3 3.5 5.6 8.6 7.6 4.3 1.7 5.1 1.4 6 1.3.9-.1 2.9-1.2 3.3-2.3.4-1.1.4-2.1.3-2.3-.1-.2-.5-.4-.9-.6l-3.3-1.6c-.4-.2-.7-.3-1 .1-.3.4-1.2 1.5-1.4 1.8-.2.3-.5.3-.9.1-3.3-1.6-5.4-3.7-5.7-4.3-.3-.6.1-.9.4-1.1l.9-.9c.2-.2.3-.5.4-.8z"/>
+    </svg>
+  );
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 // ── Calendly inline widget ────────────────────────────────────────────────────
 const CALENDLY_URL = "https://calendly.com/avenueteamofficial/30min";
 const SCRIPT_ID    = "calendly-widget-js";
@@ -22,7 +40,6 @@ function CalendlyEmbed({ height = 700 }: { height?: number }) {
         setBookingState(prev => prev === "idle" ? "booked" : "rebooked");
       }
       if (e.data?.event === "calendly.event_canceled") {
-        // Reset to idle and remount widget so the latest availability is fetched fresh
         setBookingState("idle");
         setTimeout(mountWidget, 50);
       }
@@ -102,8 +119,9 @@ function CalendlyEmbed({ height = 700 }: { height?: number }) {
                 <strong>Already booked?</strong> Want to be seen as a priority client?
               </p>
               <a href="https://wa.me/919801458766?text=Hi%20Avenue!%20I%20already%20have%20a%20meeting%20booked%20and%20I%27d%20like%20to%20discuss%20priority%20onboarding."
-                className="btn btn-y" target="_blank" rel="noreferrer">
-                💬 Message Us on WhatsApp →
+                className="btn btn-y" target="_blank" rel="noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <WhatsAppIcon /> Message Us on WhatsApp →
               </a>
               <span className="contact-note">⚡ We reply within 24 hours.</span>
             </div>
@@ -130,8 +148,9 @@ function CalendlyEmbed({ height = 700 }: { height?: number }) {
                 <strong>Get priority access</strong> — reach us directly on WhatsApp.
               </p>
               <a href="https://wa.me/919801458766?text=Hi%20Avenue!%20I%20already%20have%20a%20meeting%20booked%20and%20I%27d%20like%20to%20discuss%20priority%20onboarding."
-                className="btn btn-y" target="_blank" rel="noreferrer">
-                💬 Message Us on WhatsApp →
+                className="btn btn-y" target="_blank" rel="noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                <WhatsAppIcon /> Message Us on WhatsApp →
               </a>
               <span className="contact-note">⚡ We reply within 24 hours.</span>
             </div>
@@ -150,6 +169,35 @@ function CalendlyEmbed({ height = 700 }: { height?: number }) {
           transition: "height 0.3s ease",
         }}
       />
+
+      {/* ── No free slot nudge ────────────────────────────────────────────── */}
+      {bookingState === "idle" && (
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: 12,
+          marginTop: 16,
+          padding: "12px 20px",
+          borderRadius: 12,
+          background: "var(--card-bg, rgba(255,255,255,0.03))",
+          border: "1px dashed var(--border, rgba(255,255,255,0.1))",
+        }}>
+          <span style={{ fontSize: "0.875rem", color: "var(--muted, #888)" }}>
+            😕 Can&apos;t find a free slot?
+          </span>
+          <a
+            href="https://wa.me/919801458766?text=Hi%20Avenue!%20I%20checked%20the%20calendar%20but%20couldn%27t%20find%20a%20free%20slot.%20Can%20we%20sort%20a%20time%3F"
+            target="_blank"
+            rel="noreferrer"
+            className="btn btn-y"
+            style={{ fontSize: "0.85rem", padding: "8px 16px", display: "inline-flex", alignItems: "center", gap: 8 }}
+          >
+            <WhatsAppIcon /> Text us on WhatsApp →
+          </a>
+        </div>
+      )}
     </section>
   );
 }
@@ -302,8 +350,9 @@ export default function ContactPage() {
             <a
               href="https://wa.me/919801458766?text=Hi%20Avenue%20Marketing%20Agency!%20I%20came%20across%20your%20website%20and%20I%27m%20interested%20in%20discussing%20a%20potential%20campaign%20or%20collaboration.%20Could%20we%20connect%3F"
               className="btn btn-y" target="_blank" rel="noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
             >
-              Open WhatsApp →
+              <WhatsAppIcon /> Open WhatsApp →
             </a>
             <span className="contact-note">⚡ We reply within 24 hours.</span>
           </div>
