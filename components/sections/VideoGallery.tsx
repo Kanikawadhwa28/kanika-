@@ -1,75 +1,64 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const CAMPAIGNS = [
   {
-    title: "Navi — 45M Views",
-    sub: "200+ fintech creators drove 45M views with 3.2% engagement — 4x industry average.",
-    label: "FINTECH",
+    title: "Zepto — 45M+ Views",
+    sub: "booming",
+    label: "FOOD",
     brand: "Zepto",
-    stat: "🔥 45M Views • 200+ Creators",
+    stat: "🔥 7M Views •Creator",
     icon: "🎬",
     bg: "linear-gradient(135deg,#1a0000,#0d0d00)",
     big: true,
-    reelUrl: "https://www.instagram.com/reel/DSaNrL3gh6e/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==n",
-    preview: "https://picsum.photos/seed/navi/540/300",
+    reelUrl: "https://www.instagram.com/reel/DSaNrL3gh6e/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    videoPreview: "/videos/zepto-preview.mp4",       // 👈 add your short clip here
   },
   {
-    title: "Samsonite — 100M Reach",
-    sub: "Celebrity + mega-influencer mix. 100M+ reach in 3 weeks.",
-    label: "LUXURY",
-    brand: "Samsonite",
-    stat: "🌟 100M+ Reach",
+    title: "Kotak Mahindra Bank Ltd — 37.7M+",
+    sub: "Finance",
+    label: "FINANCE",
+    brand: "Kotak Mahindra Bank Ltd",
+    stat: "🌟 37.7M+ Views",
     icon: "🧳",
     bg: "linear-gradient(135deg,#0d0d00,#1a1800)",
-    reelUrl: "https://www.instagram.com/reel/DVSf4vkgH8-/", // replace with real URL
-    preview: "https://picsum.photos/seed/samsonite/540/300",
+    reelUrl: "https://www.instagram.com/reel/DUVZqFMCMZU/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    videoPreview: "/videos/kotak-preview.mp4",  // 👈 add your short clip here
   },
   {
-    title: "boAt — 30K Sign-Ups",
-    sub: "500+ micro-influencers drove 30K direct sign-ups.",
-    label: "D2C",
-    brand: "boAt",
-    stat: "📈 30K Sign-Ups",
+    title: "Kalyan Matrimonial — 1.3M+ Views",
+    sub: "MATCHMAKING,JEWELLERS",
+    label: "Matrimonial Service",
+    brand: "Kalyan Matrimony",
+    stat: "1.3M+ Views",
     icon: "🎧",
     bg: "linear-gradient(135deg,#000a1a,#00051f)",
-    reelUrl: "https://www.instagram.com/reel/DVSf4vkgH8-/", // replace with real URL
-    preview: "https://picsum.photos/seed/boat/540/300",
+    reelUrl: "https://www.instagram.com/reel/DPDDEXTk5Fz/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    videoPreview: "/videos/kalyan-preview.mp4",
   },
   {
-    title: "BGMI — 15M Engagements",
-    sub: "India's largest gaming influencer activation. 500+ streamers, 15M engagements.",
-    label: "GAMING",
-    brand: "BGMI",
-    stat: "⚡ 15M Engagements",
+    title: "FLIPKART — 72.7M+ Engagements",
+    sub: "E-COMMERCE",
+    label: "E-COMMERCE",
+    brand: "FLIPKART",
+    stat: "⚡ 72.7M+ Engagements",
     icon: "🎮",
     bg: "linear-gradient(135deg,#001400,#001a00)",
-    reelUrl: "https://www.instagram.com/reel/DVSf4vkgH8-/", // replace with real URL
-    preview: "https://picsum.photos/seed/bgmi/540/300",
+    reelUrl: "https://www.instagram.com/reel/DUkO96YCJy7/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    videoPreview: "/videos/flipkart-preview.mp4",
   },
   {
-    title: "Samsung — 22M Reach",
-    sub: "Galaxy launch with 300+ tech creators. 22M reach in 10 days.",
-    label: "TECH",
-    brand: "Samsung",
-    stat: "📱 22M Reach, 10 Days",
+    title: "boAt — 8.9M+ Views",
+    sub: "electronics",
+    label: "D2C",
+    brand: "boAt",
+    stat: "📱 8.9M+ Views",
     icon: "📱",
     bg: "linear-gradient(135deg,#001a1a,#000d0d)",
-    reelUrl: "https://www.instagram.com/reel/DVSf4vkgH8-/", // replace with real URL
-    preview: "https://picsum.photos/seed/samsung/540/300",
-  },
-  {
-    title: "Puma — 8M Impressions",
-    sub: "120+ fitness and fashion creators drove 8M impressions in 2 weeks.",
-    label: "SPORTS",
-    brand: "Puma India",
-    stat: "👟 8M Impressions",
-    icon: "👟",
-    bg: "linear-gradient(135deg,#0a0000,#1a0000)",
-    reelUrl: "https://www.instagram.com/reel/DVSf4vkgH8-/", // replace with real URL
-    preview: "https://picsum.photos/seed/puma/540/300",
-  },
+    reelUrl: "https://www.instagram.com/reel/DUkbTuYDA2b/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+    videoPreview: "/videos/boat-preview.mp4",
+  }
 ];
 
 // ── Instagram gradient icon ───────────────────────────────────────────────────
@@ -88,7 +77,6 @@ const IgIcon = () => (
 
 // ── Floating reel modal ───────────────────────────────────────────────────────
 function ReelModal({ c, onClose }: { c: typeof CAMPAIGNS[0]; onClose: () => void }) {
-  // Process IG embed after mount
   useEffect(() => {
     const tryProcess = () => {
       const w = window as typeof window & { instgrm?: { Embeds: { process: () => void } } };
@@ -107,7 +95,6 @@ function ReelModal({ c, onClose }: { c: typeof CAMPAIGNS[0]; onClose: () => void
   }, []);
 
   return (
-    // Backdrop
     <div
       onClick={onClose}
       style={{
@@ -118,7 +105,6 @@ function ReelModal({ c, onClose }: { c: typeof CAMPAIGNS[0]; onClose: () => void
         padding: 16,
       }}
     >
-      {/* Floating card — stops click propagating to backdrop */}
       <div
         onClick={e => e.stopPropagation()}
         style={{
@@ -133,7 +119,6 @@ function ReelModal({ c, onClose }: { c: typeof CAMPAIGNS[0]; onClose: () => void
           animation: "floatUp .25s ease",
         }}
       >
-        {/* Close ✕ */}
         <button
           onClick={onClose}
           style={{
@@ -149,7 +134,6 @@ function ReelModal({ c, onClose }: { c: typeof CAMPAIGNS[0]; onClose: () => void
           ✕
         </button>
 
-        {/* Instagram embed */}
         <blockquote
           className="instagram-media"
           data-instgrm-captioned
@@ -161,7 +145,6 @@ function ReelModal({ c, onClose }: { c: typeof CAMPAIGNS[0]; onClose: () => void
           }}
         />
 
-        {/* Stat strip */}
         <div style={{
           padding: "10px 16px", display: "flex",
           alignItems: "center", justifyContent: "space-between",
@@ -171,15 +154,40 @@ function ReelModal({ c, onClose }: { c: typeof CAMPAIGNS[0]; onClose: () => void
           <span>{c.stat}</span>
         </div>
       </div>
-
-      {/* Float-up keyframe injected once */}
       <style>{`@keyframes floatUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(-8px)}}`}</style>
     </div>
   );
 }
 
-// ── Preview card (thumbnail + play) ──────────────────────────────────────────
+// ── Preview card — auto-loops every 1.5s from load, no hover needed ─────────
 function ReelCard({ c, big, onPlay }: { c: typeof CAMPAIGNS[0]; big?: boolean; onPlay: () => void }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+
+    // Start as soon as buffered
+    const startPlay = () => {
+      v.currentTime = 0;
+      v.play().catch(() => {});
+    };
+    v.addEventListener("canplay", startPlay, { once: true });
+
+    // Restart from 0 every 1.5 seconds
+    const interval = setInterval(() => {
+      if (v) {
+        v.currentTime = 0;
+        v.play().catch(() => {});
+      }
+    }, 1500);
+
+    return () => {
+      clearInterval(interval);
+      v.removeEventListener("canplay", startPlay);
+    };
+  }, []);
+
   return (
     <div
       className={`vcard${big ? " vbig" : ""}`}
@@ -190,16 +198,41 @@ function ReelCard({ c, big, onPlay }: { c: typeof CAMPAIGNS[0]; big?: boolean; o
         className="vcard-bg"
         style={{
           height: big ? 300 : 210,
-          background: c.preview ? "none" : c.bg,
-          backgroundImage: c.preview ? `url(${c.preview})` : undefined,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          display: "flex", alignItems: "center", justifyContent: "center",
+          background: c.bg,
+          position: "relative",
+          overflow: "hidden",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           fontSize: big ? 90 : 64,
         }}
       >
-        {!c.preview && c.icon}
+        {/* Emoji fallback behind video */}
+        <span style={{ position: "relative", zIndex: 1 }}>{c.icon}</span>
+
+        {/* Auto-looping video — plays immediately on load */}
+        {c.videoPreview && (
+          <video
+            ref={videoRef}
+            src={c.videoPreview}
+            muted
+            playsInline
+            preload="auto"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",   // fits entire video inside frame, no cropping
+              opacity: 0,
+              transition: "opacity 0.3s ease",
+              zIndex: 2,
+            }}
+            onCanPlay={e => { (e.target as HTMLVideoElement).style.opacity = "1"; }}
+          />
+        )}
       </div>
+
       <div className="vcard-ov" />
       <div className="vcard-lbl">{c.label}</div>
 
@@ -234,27 +267,6 @@ export default function VideoGallery() {
   const [activeReel, setActiveReel] = useState<typeof CAMPAIGNS[0] | null>(null);
 
   useEffect(() => {
-    // Modal handlers for plain cards (no reelUrl — kept for backwards compat)
-    document.querySelectorAll<HTMLElement>("[data-modal-title]").forEach((card) => {
-      card.addEventListener("click", () => {
-        const title = card.dataset.modalTitle || "";
-        const sub = card.dataset.modalSub || "";
-        const modal = document.getElementById("modal");
-        const mTitle = document.getElementById("mTitle");
-        const mSub = document.getElementById("mSub");
-        const mIco = document.getElementById("mIco");
-        const icons: Record<string, string> = {
-          Navi: "🎬", Samsonite: "🧳", boAt: "🎧", BGMI: "🎮", Samsung: "📱", Puma: "👟",
-        };
-        const key = Object.keys(icons).find((k) => title.includes(k));
-        if (mTitle) mTitle.textContent = title;
-        if (mSub) mSub.textContent = sub;
-        if (mIco) mIco.textContent = key ? icons[key] : "🎬";
-        modal?.classList.add("open");
-      });
-    });
-
-    // Close modal on Escape
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setActiveReel(null); };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -315,7 +327,6 @@ export default function VideoGallery() {
         )}
       </div>
 
-      {/* Credits clause */}
       <p style={{
         marginTop: 32,
         textAlign: "center",
@@ -329,7 +340,6 @@ export default function VideoGallery() {
         * All proprietary content, intellectual assets, and brand identifiers showcased hereinabove remain the exclusive intellectual property of their respective proprietorial entities. Avenue Marketing Agency curates and disseminates said campaigns solely for the purposes of amplifying socio-digital visibility and exemplifying superlative influencer-driven marketing executions. Entities seeking inclusion within our curated portfolio are cordially invited to initiate correspondence at their earliest convenience.
       </p>
 
-      {/* Floating reel modal */}
       {activeReel && (
         <ReelModal c={activeReel} onClose={() => setActiveReel(null)} />
       )}
