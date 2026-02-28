@@ -10,7 +10,7 @@ function ContactForm() {
   const presetQuery = searchParams.get("query") || "";
   const isCreator = searchParams.get("creator") === "1";
 
-  const [sendStatus, setSendStatus] = useState<"idle" | "sending" | "sent" | "more">("idle");
+  const [sendStatus, setSendStatus] = useState<"idle" | "sending" | "sent" | "error" | "more">("idle");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,17 +26,39 @@ function ContactForm() {
 
     setSendStatus("sending");
 
-    const subject = encodeURIComponent("New enquiry from Avenue Marketing Agency website");
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nQuery: ${query}\n\nMessage:\n${message}`
-    );
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/avenueteamofficial@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone: phone || "Not provided",
+          query: query || "General enquiry",
+          message,
+          _subject: "New enquiry from Avenue Marketing Agency website",
+          // Disable FormSubmit's own captcha page redirect
+          _captcha: "false",
+          // Prevent FormSubmit from redirecting after submission
+          _template: "table",
+        }),
+      });
 
-    window.location.href = `mailto:teamavenueofficial@gmail.com?subject=${subject}&body=${body}`;
-
-    setTimeout(() => {
-      setSendStatus("sent");
-      setTimeout(() => setSendStatus("more"), 1500);
-    }, 300);
+      if (res.ok) {
+        setSendStatus("sent");
+        form.reset();
+        setTimeout(() => setSendStatus("more"), 2500);
+      } else {
+        setSendStatus("error");
+        setTimeout(() => setSendStatus("idle"), 3000);
+      }
+    } catch {
+      setSendStatus("error");
+      setTimeout(() => setSendStatus("idle"), 3000);
+    }
   };
 
   return (
@@ -87,14 +109,17 @@ function ContactForm() {
 
           {sendStatus === "idle" && (
             <button type="submit" className="btn btn-y">
-              Send Email →
+              Send Message →
             </button>
           )}
           {sendStatus === "sending" && (
             <div className="contact-status">Sending…</div>
           )}
           {sendStatus === "sent" && (
-            <div className="contact-status contact-status-ok">Sent ✓</div>
+            <div className="contact-status contact-status-ok">Message sent ✓</div>
+          )}
+          {sendStatus === "error" && (
+            <div className="contact-status contact-status-err">Something went wrong. Please try again.</div>
           )}
           {sendStatus === "more" && (
             <>
