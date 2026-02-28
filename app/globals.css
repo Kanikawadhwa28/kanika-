@@ -648,7 +648,18 @@ footer{background:#020202;border-top:1px solid var(--bdr);padding:68px 5% 30px;}
 .contact-field label{font-size:11px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;}
 .contact-field input,.contact-field textarea{padding:9px 11px;border-radius:8px;border:1px solid var(--bdr);background:rgba(255,255,255,.02);color:var(--text);font-size:13px;font-family:var(--body);outline:none;transition:border-color .25s,background .25s;}
 .contact-field input:focus,.contact-field textarea:focus{border-color:rgba(255,215,0,.5);background:rgba(0,0,0,.9);}
-
+/* ── Calendly post-booking banners ─────────────────────────────────────────── */
+.calendly-booked-banner {display: flex;flex-direction: column;gap: 20px;background: var(--card-bg, rgba(255, 255, 255, 0.04));border: 1px solid var(--border, rgba(255, 255, 255, 0.1));border-radius: 16px;padding: 28px 32px;margin-bottom: 24px;}
+.calendly-booked-inner {display: flex;align-items: flex-start;gap: 16px;}
+.calendly-booked-icon {font-size: 2rem;line-height: 1;flex-shrink: 0;}
+.calendly-booked-title {font-size: 1.1rem;font-weight: 600;margin: 0 0 4px;}
+.calendly-booked-sub {font-size: 0.9rem;color: var(--muted, #888);margin: 0;}
+.calendly-booked-actions {display: flex;flex-wrap: wrap;align-items: center;gap: 16px;}
+.calendly-booked-or {font-size: 0.85rem;color: var(--muted, #888);font-style: italic;}
+.calendly-priority-box {display: flex;flex-wrap: wrap;align-items: center;gap: 12px;background: var(--card-bg-2, rgba(255, 255, 255, 0.06));border: 1px solid var(--border, rgba(255, 255, 255, 0.08));border-radius: 12px;padding: 16px 20px;flex: 1;min-width: 280px;}
+.calendly-priority-text {margin: 0;font-size: 0.9rem;color: var(--muted, #aaa);flex: 1;min-width: 160px;}
+.calendly-priority-text strong {color: var(--text, #fff);}
+ /* ─────────────────────────────────────────────────────────────────────────── */
 /* MODAL */
 .modal{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.94);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .28s;}
 .modal.open{opacity:1;visibility:visible;}
