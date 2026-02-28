@@ -168,6 +168,10 @@ export default function Navbar() {
                   <a
                     key={link.text}
                     href={link.href}
+                    onClick={() => {
+                      setOpenIndex(null);
+                      document.getElementById("mobNav")?.classList.remove("open");
+                    }}
                     style={{
                       display: "flex",
                       alignItems: "center",
