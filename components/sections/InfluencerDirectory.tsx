@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const CATEGORIES = ["All", "Fashion", "Travel", "Food", "Beauty", "Fitness", "Tech", "Gaming", "Finance"];
+const CATEGORIES = ["All", "Fashion", "Travel", "Food", "Beauty", "Fitness", "Tech", "Gaming", "Finance", "Comedy", "Parenting"];
 
 const INFLUENCERS = [
   { n: "Riya Sharma", c: "fashion", cl: "Fashion/Lifestyle", f: "1.5M", er: "4.2%", ig: "1.5M", yt: "800K", e: "👗", bg: "#1a0f0a" },

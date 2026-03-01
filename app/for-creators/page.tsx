@@ -49,7 +49,6 @@ export default function ForCreatorsPage() {
           {visibleCreators.map((c) => (
             <div key={c.name} className="icard">
               <div className="icard-photo">
-                {/* Image with emoji fallback */}
                 <div
                   className="icard-img"
                   style={{ background: `linear-gradient(135deg,${c.bg},#0d0d0d)`, position: "relative" }}
@@ -58,15 +57,8 @@ export default function ForCreatorsPage() {
                     <img
                       src={`/images/creators/${c.image}`}
                       alt={c.name}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        position: "absolute",
-                        inset: 0,
-                      }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
                       onError={(e) => {
-                        // Hide broken image, show emoji fallback
                         const target = e.target as HTMLImageElement;
                         target.style.display = "none";
                         const fallback = target.nextElementSibling as HTMLElement;
@@ -74,15 +66,11 @@ export default function ForCreatorsPage() {
                       }}
                     />
                   ) : null}
-                  {/* Emoji fallback — hidden if image loads */}
                   <span
                     style={{
                       display: c.image ? "none" : "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: "100%",
-                      height: "100%",
-                      fontSize: 48,
+                      alignItems: "center", justifyContent: "center",
+                      width: "100%", height: "100%", fontSize: 48,
                     }}
                   >
                     {c.emoji}
@@ -97,7 +85,19 @@ export default function ForCreatorsPage() {
                     <span className="plat ig">📸 Instagram</span>
                     <span className="plat yt">▶ YouTube</span>
                   </div>
-                  <span className="ov-cta">View Profile →</span>
+                  {c.instagram ? (
+                    <a
+                      href={c.instagram}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="ov-cta"
+                      style={{ textDecoration: "none" }}
+                    >
+                      View Profile →
+                    </a>
+                  ) : (
+                    <span className="ov-cta">View Profile →</span>
+                  )}
                 </div>
               </div>
 
