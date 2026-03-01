@@ -148,20 +148,37 @@ export default function PlatformPage() {
               <div>8+ Years</div>
             </div>
             <div className="case-grid">
-              {campaigns.map((c) => (
-                <button
-                  key={c.id}
-                  type="button"
-                  className="case-card"
-                  onClick={() => setActiveCampaignId(c.id)}
-                >
-                  <div className="case-emoji">{c.emoji}</div>
-                  <div className="case-label">{c.category}</div>
-                  <div className="case-title">{c.title}</div>
-                  <div className="case-stat">{c.stat}</div>
-                  <div className="case-cta">View details →</div>
-                </button>
-              ))}
+              {campaigns
+                .filter((c) => !["navi", "bgmi"].includes(c.id))
+                .map((c) => (
+                  <button
+                    key={c.id}
+                    type="button"
+                    className="case-card"
+                    onClick={() => setActiveCampaignId(c.id)}
+                  >
+                    {/* Campaign image */}
+                    {c.image && (
+                      <div style={{
+                        width: "100%", height: 140, marginBottom: 12,
+                        borderRadius: 10, overflow: "hidden",
+                        background: "#0a0a0a",
+                      }}>
+                        <img
+                          src={`/images/campaigns/${c.image}`}
+                          alt={c.brand}
+                          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                        />
+                      </div>
+                    )}
+                    {!c.image && <div className="case-emoji">{c.emoji}</div>}
+                    <div className="case-label">{c.category}</div>
+                    <div className="case-title">{c.title}</div>
+                    <div className="case-stat">{c.stat}</div>
+                    <div className="case-cta">View details →</div>
+                  </button>
+                ))}
             </div>
           </section>
 
