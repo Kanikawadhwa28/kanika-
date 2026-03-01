@@ -35,7 +35,7 @@ const CAMPAIGNS = [
     icon: "🎧",
     bg: "linear-gradient(135deg,#000a1a,#00051f)",
     reelUrl: "https://www.instagram.com/reel/DPDDEXTk5Fz/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
-    videoPreview: "/videos/kalyan-preview.mp4",
+    videoPreview: "/videos/Kalyan-preview.mp4",
   },
   {
     title: "FLIPKART — 72.7M+ Engagements",
