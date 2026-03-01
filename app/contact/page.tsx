@@ -161,7 +161,9 @@ function CalendlyEmbed({ height = 700 }: { height?: number }) {
       <div
         ref={containerRef}
         style={{
-          minWidth: 320,
+          minWidth: 0,
+          width: "100%",
+          maxWidth: "100%",
           height: bookingState === "idle" ? height : 0,
           overflow: "hidden",
           borderRadius: 16,

@@ -14,7 +14,6 @@ import VideoGallery from "@/components/sections/VideoGallery";
 import CampaignTypes from "@/components/sections/CampaignTypes";
 import SplitPlatform from "@/components/sections/SplitPlatform";
 import TeamSection from "@/components/sections/TeamSection";
-import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import BlogSection from "@/components/sections/BlogSection";
 import FaqSection from "@/components/sections/FaqSection";
 import NewsletterSection from "@/components/sections/NewsletterSection";
@@ -36,7 +35,6 @@ export default function Home() {
       <CampaignTypes />
       <SplitPlatform />
       <TeamSection />
-      <TestimonialsSection />
       <BlogSection />
       <FaqSection />
       <NewsletterSection />

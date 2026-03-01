@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import BrandLogo from "@/components/ui/BrandLogo";
+
+// Helper to check if any link in an item matches current path
+function itemMatchesPath(links: { href: string }[], pathname: string): boolean {
+  return links.some((l) => pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href)));
+}
 
 // Dropdown menu data - easy to edit here without touching JSX
 const NAV_ITEMS = [
@@ -27,6 +33,12 @@ const NAV_ITEMS = [
       { icon: "🌟", text: "Join Community", href: "/for-creators" },
       { icon: "📣", text: "Live Campaigns", href: "/for-creators" },
       { icon: "💸", text: "Get Paid", href: "/for-creators" },
+    ],
+  },
+  {
+    label: "For Brands",
+    links: [
+      { icon: "🏢", text: "Brand Campaigns", href: "/for-brands" },
     ],
   },
   {
@@ -66,6 +78,7 @@ const ChevronDown = ({ open }: { open?: boolean }) => (
 );
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleMobItem = (i: number) =>
@@ -87,7 +100,7 @@ export default function Navbar() {
           {/* Desktop nav links */}
           <ul className="nav-links">
             {NAV_ITEMS.map((item) => (
-              <li key={item.label} className="nav-item">
+              <li key={item.label} className={`nav-item${itemMatchesPath(item.links, pathname) ? " active" : ""}`}>
                 <span className="nav-a">
                   {item.label} <ChevronDown />
                 </span>
@@ -142,6 +155,7 @@ export default function Navbar() {
             {/* Tappable header row */}
             <button
               onClick={() => toggleMobItem(i)}
+              className={itemMatchesPath(item.links, pathname) ? "active" : ""}
               style={{
                 width: "100%",
                 background: "none",

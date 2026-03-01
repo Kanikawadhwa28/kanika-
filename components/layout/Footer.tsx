@@ -111,7 +111,7 @@ export default function Footer() {
               className="soc soc-li" target="_blank" rel="noreferrer" aria-label="LinkedIn">
               <LinkedInIcon />
             </a>
-            <a href="https://www.facebook.com"
+            <a href="https://www.facebook.com/profile.php?id=61588060778467"
               className="soc soc-fb" target="_blank" rel="noreferrer" aria-label="Facebook">
               <FacebookIcon />
             </a>
@@ -130,7 +130,7 @@ export default function Footer() {
       </div>
 
       <div className="ft-bot">
-        <p>© 2025 Avenue Marketing Agency. All rights reserved.</p>
+        <p>© 2026 Avenue Marketing Agency. All rights reserved.</p>
         <div className="ft-bot-links">
           <a href="#">Privacy</a>
           <a href="#" onClick={handleTermsClick}>Terms</a>
