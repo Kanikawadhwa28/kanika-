@@ -4,42 +4,45 @@ import { useEffect } from "react";
 
 const FAQS = [
   {
-    q: "How does Avenue Marketing Agency verify its 7,50,000+ creators?",
-    a: "Every creator goes through API-based extraction, our proprietary AI fake-follower detection model, and manual review for 100K+ accounts. Engagement data refreshes every 72 hours.",
+    q: "What exactly does Avenue Marketing Agency do?",
+    a: "We connect brands with the right creators for influencer marketing campaigns. Think of us as the bridge so we understand what a brand needs, find creators who genuinely fit, and make the collaboration happen. Simple, human, effective.",
   },
   {
-    q: "What is the Fair Price Index and how accurate is it?",
-    a: "Built on 5,000+ real brand-creator transactions, updated monthly. Brands using FPI consistently report 25-40% cost savings versus negotiating without data benchmarks.",
+    q: "How do you find the right creator for our brand?",
+    a: "Through a mix of industry knowledge, our existing creator network, and research. We look at niche, audience fit, content style, and past work (not just follower count). Every recommendation is handpicked, not algorithm generated.",
   },
   {
-    q: "Which platforms do you support — Instagram, YouTube, LinkedIn?",
-    a: "Yes — Instagram (Reels, Stories, Feed), YouTube (Shorts & long-form), Twitter/X, LinkedIn, and emerging platforms like Moj and Josh. All data unified in one dashboard.",
+    q: "We're a small brand then can we still work with you?",
+    a: "Absolutely. Some of our best campaigns have been for smaller brands. We work with budgets of all sizes and are especially good at making barter collaborations work where product value replaces cash.",
   },
   {
-    q: "How quickly can I launch my first campaign?",
-    a: "Most brands go live within 7-14 days of signup. Managed service clients with dedicated support can launch in 3-5 business days.",
+    q: "What is a barter collaboration and how does it work?",
+    a: "A barter collab means a creator receives your product or service in exchange for content so no cash changes hands. We handle the outreach, negotiation, and brief so the brand gets quality content and the creator gets real value.",
   },
   {
-    q: "Is there a free trial available?",
-    a: "Yes! Free plan lets you search 50 creators and run 1 campaign — no credit card required. Pro plan includes a 14-day full-access trial.",
+    q: "I'm a creator so how do I get brand deals through Avenue?",
+    a: "Just reach out to us directly via the Contact page or WhatsApp. We work with creators across all sizes from nano to mega. If we think you're a good fit for a brand we're working with, we'll loop you in.",
+  },
+  {
+    q: "What niches and industries do you work with?",
+    a: "Fashion, beauty, food, travel, fitness, tech, gaming, finance, comedy, parenting — and more. If there's a creator community around it, we can work with it.",
+  },
+  {
+    q: "How do we get started?",
+    a: "Just contact us. No long forms, no demos. Tell us what you need (brand or creator) and we'll take it from there.",
   },
 ];
 
 export default function FaqSection() {
   useEffect(() => {
-    // Accordion: click question to open/close answer
     document.querySelectorAll<HTMLElement>(".faq-q").forEach((questionEl) => {
       questionEl.onclick = () => {
         const item = questionEl.parentElement;
         if (!item) return;
         const wasOpen = item.classList.contains("open");
-
-        // Close all items first
         document.querySelectorAll<HTMLElement>(".faqitem").forEach((i) =>
           i.classList.remove("open")
         );
-
-        // If it wasn't open before, open it now
         if (!wasOpen) item.classList.add("open");
       };
     });

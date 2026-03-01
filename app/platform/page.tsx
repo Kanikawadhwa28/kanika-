@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { campaigns } from "@/data/campaigns";
-import { blogPosts } from "@/data/blog";
+import { blogPosts, type BlogPost } from "@/data/blog";
 import PageHero from "@/components/ui/PageHero";
 import CampaignModal from "@/components/ui/CampaignModal";
 
@@ -11,8 +11,19 @@ const SECTIONS = ["products", "work", "blog", "guides"] as const;
 export default function PlatformPage() {
   const [active, setActive] = useState<(typeof SECTIONS)[number]>("products");
   const [activeCampaignId, setActiveCampaignId] = useState<string | null>(null);
+  const [openBlog, setOpenBlog] = useState<BlogPost | null>(null);
 
   useEffect(() => {
+    // ── Handle scroll intent from other pages (e.g. newsletter nudge) ──
+    const scrollTarget = sessionStorage.getItem("scrollTo");
+    if (scrollTarget) {
+      sessionStorage.removeItem("scrollTo");
+      setTimeout(() => {
+        document.getElementById(scrollTarget)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 400);
+    }
+
+    // ── Active section tracker ──
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -84,7 +95,7 @@ export default function PlatformPage() {
                 <div className="prod-text">
                   <h3>📊 Creator Discovery</h3>
                   <p>Find your perfect creator instantly with 30+ filters, fake follower detection and engagement scoring.</p>
-                  <a href="/for-creators" className="btn btn-y">See few creators →</a>
+                  <a href="/for-creators" className="btn btn-y">See few Creators→</a>
                   <span className="prod-badge">7,50,000+ Creators</span>
                 </div>
               </div>
@@ -92,7 +103,7 @@ export default function PlatformPage() {
                 <div className="prod-text">
                   <h3>💲 Fair Price Index</h3>
                   <p>Never overpay a creator again with real-time benchmarks, tier-based pricing and negotiation data.</p>
-                  <a href="/#split-fair-price" className="btn btn-y">What is Fair Price Index →</a>
+                  <a href="/#split-fair-price" className="btn btn-y">What is Fair Price Index→</a>
                   <span className="prod-badge">Save up to 40%</span>
                 </div>
                 <div className="prod-mock">
@@ -119,7 +130,7 @@ export default function PlatformPage() {
                 <div className="prod-text">
                   <h3>🎯 Competitor Tracker</h3>
                   <p>Spy on your competitors&apos; playbook with creator mapping, platform spend analysis and share-of-voice insights.</p>
-                  <a href="/contact" className="btn btn-y">Contact Us →</a>
+                  <a href="/contact" className="btn btn-y">Reach Out to Us→</a>
                   <span className="prod-badge">Real-time Intel</span>
                 </div>
               </div>
@@ -160,27 +171,49 @@ export default function PlatformPage() {
             <span className="gold-bar" />
             <div className="blog-grid">
               {featured && (
-                <a href="#" className="bcard bmain">
-                  <div className="bcard-img" style={{ height: 260 }}>
-                    {featured.icon}
+                <button type="button" className="bcard bmain" onClick={() => setOpenBlog(featured)}>
+                  <div
+                    className="bcard-img"
+                    style={{
+                      height: 260,
+                      fontSize: 60,
+                      background: featured.image ? "none" : "linear-gradient(135deg,#180e00,#0a0a0a)",
+                      backgroundImage: featured.image ? `url(/images/blogs/${featured.image})` : undefined,
+                      backgroundSize: "contain",
+                      backgroundPosition: "center",
+                      backgroundRepeat: "no-repeat",
+                      backgroundColor: "#0a0a0a",
+                    }}
+                  >
+                    {!featured.image && featured.icon}
                   </div>
                   <div className="bcard-body">
                     <div className="bcat">{featured.category}</div>
                     <div className="bttl">{featured.title}</div>
                     <p className="bexc">{featured.excerpt}</p>
                     <div className="bfoot">
-                      <span>
-                        📅 {featured.date} · {featured.readTime}
-                      </span>
+                      <span>📅 {featured.date} · {featured.readTime}</span>
                       <span className="bread">Read Full Report →</span>
                     </div>
                   </div>
-                </a>
+                </button>
               )}
               {others.map((post) => (
-                <a key={post.id} href="#" className="bcard">
-                  <div className="bcard-img" style={{ height: 130 }}>
-                    {post.icon}
+                <button key={post.id} type="button" className="bcard" onClick={() => setOpenBlog(post)}>
+                  <div
+                    className="bcard-img"
+                    style={{
+                      height: 130,
+                      fontSize: 34,
+                      background: post.image ? "none" : "linear-gradient(135deg,#0a0a1a,#000)",
+                      backgroundImage: post.image ? `url(/images/blogs/${post.image})` : undefined,
+                      backgroundSize: "contain",
+                      backgroundPosition: "center",
+                      backgroundRepeat: "no-repeat",
+                      backgroundColor: "#0a0a0a",
+                    }}
+                  >
+                    {!post.image && post.icon}
                   </div>
                   <div className="bcard-body">
                     <div className="bcat">{post.category}</div>
@@ -190,7 +223,7 @@ export default function PlatformPage() {
                       <span className="bread">Read →</span>
                     </div>
                   </div>
-                </a>
+                </button>
               ))}
             </div>
           </section>
@@ -204,19 +237,19 @@ export default function PlatformPage() {
                 <div className="guide-emoji">📘</div>
                 <h3>Beginner&apos;s Guide to Influencer Marketing</h3>
                 <p>Everything a brand needs before their first campaign.</p>
-                <a href="/contact" className="btn btn-y">Contact Us →</a>
+                <a href="/contact" className="btn btn-y">→Contact Us</a>
               </div>
               <div className="guide-card green">
                 <div className="guide-emoji">📗</div>
                 <h3>The Complete Creator Brief Template</h3>
                 <p>Get 3x better content with this step-by-step template.</p>
-                <a href="/contact" className="btn btn-y">Know From Us →</a>
+                <a href="/contact" className="btn btn-y">Know from Us</a>
               </div>
               <div className="guide-card orange">
                 <div className="guide-emoji">📙</div>
                 <h3>ROI Measurement Playbook</h3>
                 <p>Track and report ROI in a way your CFO will love.</p>
-                <a href="/contact" className="btn btn-y">Hear from founders →</a>
+                <a href="/contact" className="btn btn-y">Call Us</a>
               </div>
             </div>
           </section>
@@ -235,6 +268,34 @@ export default function PlatformPage() {
           The same insights we share with India&apos;s fastest-growing brands — every Tuesday.
         </p>
       </section>
+
+      {openBlog && (
+        <div className="modal open" onClick={() => setOpenBlog(null)} role="dialog" aria-modal="true">
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setOpenBlog(null)}>✕</button>
+            <div
+              className="bcard-img"
+              style={{
+                height: 200, fontSize: 60, borderRadius: 12, marginBottom: 16, flexShrink: 0,
+                background: openBlog.image ? "none" : "linear-gradient(135deg,#180e00,#0a0a0a)",
+                backgroundImage: openBlog.image ? `url(/images/blogs/${openBlog.image})` : undefined,
+                backgroundSize: "contain", backgroundPosition: "center",
+                backgroundRepeat: "no-repeat", backgroundColor: "#0a0a0a",
+              }}
+            >
+              {!openBlog.image && openBlog.icon}
+            </div>
+            <div className="bcat">{openBlog.category}</div>
+            <div className="modal-title">{openBlog.title}</div>
+            <p className="modal-sub" style={{ lineHeight: 1.7, marginTop: 10 }}>
+              {openBlog.content ?? openBlog.excerpt}
+            </p>
+            <span className="bfoot" style={{ marginTop: 12, display: "block" }}>
+              📅 {openBlog.date}{openBlog.readTime ? ` · ${openBlog.readTime}` : ""}
+            </span>
+          </div>
+        </div>
+      )}
 
       <CampaignModal
         campaignId={activeCampaignId}

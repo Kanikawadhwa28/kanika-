@@ -5,21 +5,60 @@ import { useState } from "react";
 const CATEGORIES = ["All", "Fashion", "Travel", "Food", "Beauty", "Fitness", "Tech", "Gaming", "Finance", "Comedy", "Parenting"];
 
 const INFLUENCERS = [
-  { n: "Riya Sharma", c: "fashion", cl: "Fashion/Lifestyle", f: "1.5M", er: "4.2%", ig: "1.5M", yt: "800K", e: "👗", bg: "#1a0f0a" },
-  { n: "Aarav Gupta", c: "travel", cl: "Travel", f: "980K", er: "5.1%", ig: "980K", yt: "450K", e: "✈️", bg: "#0a0f1a" },
-  { n: "Anita Kapoor", c: "beauty", cl: "Beauty", f: "2.1M", er: "6.3%", ig: "2.1M", yt: "1.2M", e: "💄", bg: "#1a0a14" },
-  { n: "Rahul Verma", c: "gaming", cl: "Gaming", f: "3.4M", er: "8.7%", ig: "3.4M", yt: "5.2M", e: "🎮", bg: "#001a00" },
-  { n: "Pooja Menon", c: "food", cl: "Food", f: "760K", er: "4.8%", ig: "760K", yt: "300K", e: "🍕", bg: "#1a0800" },
-  { n: "Arjun Singh", c: "fitness", cl: "Fitness", f: "1.2M", er: "5.5%", ig: "1.2M", yt: "600K", e: "💪", bg: "#001a1a" },
-  { n: "Kavya Nair", c: "tech", cl: "Tech", f: "880K", er: "3.9%", ig: "400K", yt: "880K", e: "📱", bg: "#0a001a" },
-  { n: "Dev Sharma", c: "finance", cl: "Finance", f: "650K", er: "4.1%", ig: "650K", yt: "900K", e: "💰", bg: "#0a0a00" },
+  {
+    n: "Yashita Nk",        c: "fashion",   cl: "Fashion",   f: "1.4M",
+    e: "👗",  bg: "#1a0f0a", image: "Yashi.png",
+    instagram: "https://www.instagram.com/yashitank05?igsh=MWVhYnFtZ3RobGZkbw==",
+  },
+  {
+    n: "Brinda Sharma",     c: "travel",    cl: "Travel",    f: "1.6M",
+    e: "✈️",  bg: "#0a0f1a", image: "Brinda.png",
+    instagram: "https://www.instagram.com/brindasharma?igsh=MWdvNWIxYjBjMzl6Yg==",
+  },
+  {
+    n: "Yogishruti",        c: "beauty",    cl: "Beauty",    f: "585K",
+    e: "💄",  bg: "#1a0a14", image: "Shruti.png",
+    instagram: "https://www.instagram.com/yogishruti?igsh=MWhlcTY1NjhwMXZpbw==",
+  },
+  {
+    n: "Triggered Insaan",  c: "gaming",    cl: "Gaming",    f: "13.2M",
+    e: "🎮",  bg: "#001a00", image: "Nischay.png",
+    instagram: "https://www.instagram.com/triggeredinsaan?igsh=dzd4MjhtbDBuMGl6",
+  },
+  {
+    n: "Chef Kunal",        c: "food",      cl: "Food",      f: "4M",
+    e: "🍕",  bg: "#1a0800", image: "Kunal.png",
+    instagram: "https://www.instagram.com/chefkunal?igsh=MWxoZnM3ZTRrYnRnbQ==",
+  },
+  {
+    n: "Gaurav Taneja",     c: "fitness",   cl: "Fitness",   f: "3.4M",
+    e: "💪",  bg: "#001a1a", image: "Gaurav.png",
+    instagram: "https://www.instagram.com/taneja.gaurav?igsh=eXlqZ3I2ZmhwODBk",
+  },
+  {
+    n: "Jai Arora",         c: "tech",      cl: "Tech",      f: "3.7M",
+    e: "📱",  bg: "#0a001a", image: "Jai.png",
+    instagram: "https://www.instagram.com/tech_iela?igsh=MWEwNGVpaGs1YXZqNA==",
+  },
+  {
+    n: "Sakchi Jain",       c: "finance",   cl: "Finance",   f: "1.8M",
+    e: "💰",  bg: "#0a0a00", image: "Sakchi.png",
+    instagram: "https://www.instagram.com/ca.sakchijain?igsh=N3doNGNiNXhoN3Vt",
+  },
+  {
+    n: "Tanmay Bhat",       c: "comedy",    cl: "Comedy",    f: "2M",
+    e: "😂",  bg: "#1a0a00", image: "Tanmay.png",
+    instagram: "https://www.instagram.com/tanmaybhat?igsh=NWJwN3U3NHJsd3Iy",
+  },
+  {
+    n: "Payal",             c: "parenting", cl: "Parenting", f: "139K",
+    e: "👨‍👩‍👧", bg: "#0a1a0a", image: "Payal.png",
+    instagram: "https://www.instagram.com/powerful.parentingg?igsh=MWcxejhwcnh6d2ZqZg==",
+  },
 ];
-
-type Influencer = (typeof INFLUENCERS)[0];
 
 export default function InfluencerDirectory() {
   const [filter, setFilter] = useState("all");
-  const [selected, setSelected] = useState<Influencer | null>(null);
 
   const filtered =
     filter === "all" ? INFLUENCERS : INFLUENCERS.filter((inf) => inf.c === filter);
@@ -30,7 +69,7 @@ export default function InfluencerDirectory() {
         <span className="stag">Discover Creators</span>
         <h2 className="sh">7,50,000+ <em>Influencers</em> Across India</h2>
         <p className="ssub" style={{ margin: "10px auto 28px" }}>
-          Browse by niche — hover any card to reveal live stats
+          Browse by niche — hover any card to visit their profile
         </p>
       </div>
 
@@ -47,41 +86,50 @@ export default function InfluencerDirectory() {
         ))}
       </div>
 
-      {/* Influencer cards grid */}
+      {/* Grid */}
       <div className="inf-grid">
         {filtered.map((inf) => (
           <div key={inf.n} className="icard">
             <div className="icard-photo">
-              {/* Emoji only — no image */}
+
+              {/* ── Default: photo ── */}
               <div
                 className="icard-img"
-                style={{ background: `linear-gradient(135deg,${inf.bg},#0d0d0d)` }}
+                style={{ background: `linear-gradient(135deg,${inf.bg},#0d0d0d)`, position: "relative", overflow: "hidden" }}
               >
-                {inf.e}
+                <img
+                  src={`/images/influencers/${inf.image}`}
+                  alt={inf.n}
+                  style={{ width: "100%", height: "100%", objectFit: "contain", position: "absolute", inset: 0, display: "block" }}
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                />
               </div>
+
+              {/* ── Hover overlay: emoji + followers + Visit Profile ── */}
               <div className="icard-ov">
+                <div style={{ fontSize: 48, lineHeight: 1, marginBottom: 8 }}>{inf.e}</div>
                 <div className="ov-f">{inf.f}</div>
-                <div className="ov-er">Engagement: {inf.er}</div>
-                <div className="ov-plats">
-                  <span className="plat ig">📸 {inf.ig}</span>
-                  <span className="plat yt">▶ {inf.yt}</span>
-                </div>
-                <button
-                  type="button"
+                <div className="ov-er" style={{ marginBottom: 12 }}>Instagram Followers</div>
+                <a
+                  href={inf.instagram}
+                  target="_blank"
+                  rel="noreferrer"
                   className="ov-cta"
-                  onClick={(ev) => { ev.stopPropagation(); setSelected(inf); }}
+                  style={{ textDecoration: "none" }}
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  📊 View Insights
-                </button>
+                  Visit Profile →
+                </a>
               </div>
+
             </div>
+
+            {/* Always-visible card info */}
             <div className="icard-info">
               <div className="icard-name">{inf.n}</div>
               <div className="icard-cat">{inf.cl}</div>
               <div className="icard-meta">
-                <span>📸 {inf.ig}</span>
-                <span className="ds" />
-                <span>{inf.er} ER</span>
+                <span>📸 {inf.f} followers</span>
               </div>
             </div>
           </div>
@@ -89,45 +137,8 @@ export default function InfluencerDirectory() {
       </div>
 
       <div style={{ textAlign: "center", marginTop: 36 }}>
-        <button className="btn btn-o">View More Creators ↓</button>
+        <a href="/for-creators" className="btn btn-o">View More Creators On Creators Page↓</a>
       </div>
-
-      {/* Creator detail modal */}
-      {selected && (
-        <div
-          className="modal open"
-          onClick={() => setSelected(null)}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelected(null)}>✕</button>
-            {/* Emoji avatar in modal */}
-            <div
-              className="creator-modal-fallback"
-              style={{
-                background: `linear-gradient(135deg,${selected.bg},#0d0d0d)`,
-                fontSize: 72,
-                width: 120,
-                height: 120,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                margin: "0 auto 16px",
-              }}
-            >
-              {selected.e}
-            </div>
-            <div className="modal-title">{selected.n}</div>
-            <div className="modal-sub">{selected.cl} · {selected.f} · {selected.er} ER</div>
-            <div className="ov-plats" style={{ marginTop: 8, justifyContent: "center" }}>
-              <span className="plat ig">📸 {selected.ig}</span>
-              <span className="plat yt">▶ {selected.yt}</span>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
