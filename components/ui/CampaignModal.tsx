@@ -43,29 +43,37 @@ export default function CampaignModal({ campaignId, isOpen, onClose }: CampaignM
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
             onClick={(e) => e.stopPropagation()}
           >
+            {/* ✕ close button */}
             <button className="case-modal-close" onClick={onClose}>
               ✕
             </button>
+
             <div style={{ fontSize: 48, marginBottom: 10 }}>{campaign.emoji}</div>
             <h3 className="case-modal-title">{campaign.title}</h3>
             <p className="case-modal-sub">{campaign.summary}</p>
+
             <div className="case-modal-badges">
               {campaign.badges.map((b) => (
                 <span key={b}>{b}</span>
               ))}
             </div>
-            <a
-              href="#"
+
+            {/* "View Other Stories" closes the modal */}
+            <button
+              onClick={onClose}
               className="btn btn-y"
-              style={{ marginTop: 16, justifyContent: "center", width: "100%" }}
+              style={{
+                marginTop: 16,
+                justifyContent: "center",
+                width: "100%",
+                cursor: "pointer",
+              }}
             >
-              Download Case Study →
-              {/* TODO: Replace href with actual PDF link */}
-            </a>
+              View Other Stories →
+            </button>
           </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
   );
 }
-

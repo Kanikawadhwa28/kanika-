@@ -13,7 +13,7 @@ const CAMPAIGNS = [
     bg: "linear-gradient(135deg,#1a0000,#0d0d00)",
     big: true,
     reelUrl: "https://www.instagram.com/reel/DSaNrL3gh6e/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
-    videoPreview: "/videos/zepto-preview.mp4",       // 👈 add your short clip here
+    videoPreview: "/videos/zepto-preview.mp4",
   },
   {
     title: "Kotak Mahindra Bank Ltd — 37.7M+",
@@ -24,7 +24,7 @@ const CAMPAIGNS = [
     icon: "🧳",
     bg: "linear-gradient(135deg,#0d0d00,#1a1800)",
     reelUrl: "https://www.instagram.com/reel/DUVZqFMCMZU/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
-    videoPreview: "/videos/kotak-preview.mp4",  // 👈 add your short clip here
+    videoPreview: "/videos/kotak-preview.mp4",
   },
   {
     title: "Kalyan Matrimonial — 1.3M+ Views",
@@ -58,7 +58,7 @@ const CAMPAIGNS = [
     bg: "linear-gradient(135deg,#001a1a,#000d0d)",
     reelUrl: "https://www.instagram.com/reel/DUkbTuYDA2b/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
     videoPreview: "/videos/boat-preview.mp4",
-  }
+  },
 ];
 
 // ── Instagram gradient icon ───────────────────────────────────────────────────
@@ -101,23 +101,24 @@ function ReelModal({ c, onClose }: { c: typeof CAMPAIGNS[0]; onClose: () => void
         position: "fixed", inset: 0, zIndex: 9999,
         background: "rgba(0,0,0,0.75)",
         backdropFilter: "blur(6px)",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        padding: 16,
+        display: "flex", alignItems: "flex-end", justifyContent: "flex-end",
+        padding: "clamp(12px, 3vw, 24px)",
+        boxSizing: "border-box",
       }}
     >
       <div
         onClick={e => e.stopPropagation()}
         style={{
           position: "relative",
-          width: "100%",
-          maxWidth: 420,
-          borderRadius: 20,
+          width: "min(260px, calc(100vw - 24px))",
+          borderRadius: 16,
           overflow: "hidden",
           background: "#000",
           boxShadow: "0 8px 16px rgba(0,0,0,.5), 0 24px 64px rgba(0,0,0,.6), 0 0 0 1px rgba(255,215,0,.15), 0 32px 80px rgba(255,215,0,.08)",
-          transform: "translateY(-8px)",
-          animation: "floatUp .25s ease",
+          animation: "cornerPop .25s ease",
+          transformOrigin: "bottom right",
         }}
+        className="ig-modal-wrap"
       >
         <button
           onClick={onClose}
@@ -126,13 +127,10 @@ function ReelModal({ c, onClose }: { c: typeof CAMPAIGNS[0]; onClose: () => void
             background: "rgba(0,0,0,0.7)", border: "none", cursor: "pointer",
             color: "#fff", fontSize: 16, width: 32, height: 32,
             borderRadius: "50%", display: "flex", alignItems: "center",
-            justifyContent: "center", backdropFilter: "blur(4px)",
-            lineHeight: 1,
+            justifyContent: "center", backdropFilter: "blur(4px)", lineHeight: 1,
           }}
           aria-label="Close"
-        >
-          ✕
-        </button>
+        >✕</button>
 
         <blockquote
           className="instagram-media"
@@ -141,59 +139,46 @@ function ReelModal({ c, onClose }: { c: typeof CAMPAIGNS[0]; onClose: () => void
           data-instgrm-version="14"
           style={{
             background: "#fff", border: 0, borderRadius: 0,
-            margin: 0, width: "100%", minWidth: 280, padding: 0,
+            margin: "0 !important", width: "100% !important",
+            minWidth: "0 !important", maxWidth: "100% !important",
+            padding: 0, display: "block",
           }}
         />
 
         <div style={{
-          padding: "10px 16px", display: "flex",
-          alignItems: "center", justifyContent: "space-between",
-          fontSize: 13, color: "var(--muted,#aaa)", background: "#000",
+          padding: "10px 16px", display: "flex", alignItems: "center",
+          justifyContent: "space-between", fontSize: 13,
+          color: "var(--muted,#aaa)", background: "#000",
         }}>
           <span style={{ fontWeight: 700, color: "var(--gold,#ffd700)" }}>{c.brand}</span>
           <span>{c.stat}</span>
         </div>
       </div>
-      <style>{`@keyframes floatUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(-8px)}}`}</style>
+      <style>{`
+        @keyframes cornerPop{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
+        .ig-modal-wrap iframe{ width:100% !important; min-width:0 !important; }
+      `}</style>
     </div>
   );
 }
 
-// ── Preview card — auto-loops every 1.5s from load, no hover needed ─────────
+// ── Preview card — native loop/autoPlay, resumes on scroll ──────────────────
 function ReelCard({ c, big, onPlay }: { c: typeof CAMPAIGNS[0]; big?: boolean; onPlay: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+    v.play().catch(() => {});
 
-    // Start as soon as buffered
-    const startPlay = () => {
-      v.currentTime = 0;
-      v.play().catch(() => {});
-    };
-    v.addEventListener("canplay", startPlay, { once: true });
-
-    // Restart from 0 every 1.5 seconds
-    const interval = setInterval(() => {
-      if (v) {
-        v.currentTime = 0;
-        v.play().catch(() => {});
-      }
-    }, 1500);
-
-    return () => {
-      clearInterval(interval);
-      v.removeEventListener("canplay", startPlay);
-    };
+    // Resume if browser pauses it (tab switch, scroll, etc.)
+    const resume = () => v.play().catch(() => {});
+    v.addEventListener("pause", resume);
+    return () => v.removeEventListener("pause", resume);
   }, []);
 
   return (
-    <div
-      className={`vcard${big ? " vbig" : ""}`}
-      style={{ cursor: "pointer" }}
-      onClick={onPlay}
-    >
+    <div className={`vcard${big ? " vbig" : ""}`} style={{ cursor: "pointer" }} onClick={onPlay}>
       <div
         className="vcard-bg"
         style={{
@@ -201,29 +186,26 @@ function ReelCard({ c, big, onPlay }: { c: typeof CAMPAIGNS[0]; big?: boolean; o
           background: c.bg,
           position: "relative",
           overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: big ? 90 : 64,
         }}
       >
-        {/* Emoji fallback behind video */}
+        {/* Emoji fallback shown until video loads */}
         <span style={{ position: "relative", zIndex: 1 }}>{c.icon}</span>
 
-        {/* Auto-looping video — plays immediately on load */}
         {c.videoPreview && (
           <video
             ref={videoRef}
             src={c.videoPreview}
             muted
+            loop          // ← native browser loop, no JS needed
             playsInline
+            autoPlay
             preload="auto"
             style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",   // fits entire video inside frame, no cropping
+              position: "absolute", inset: 0,
+              width: "100%", height: "100%",
+              objectFit: "contain",
               opacity: 0,
               transition: "opacity 0.3s ease",
               zIndex: 2,
@@ -236,14 +218,12 @@ function ReelCard({ c, big, onPlay }: { c: typeof CAMPAIGNS[0]; big?: boolean; o
       <div className="vcard-ov" />
       <div className="vcard-lbl">{c.label}</div>
 
-      {/* Play ring */}
       <div className="play-ring" style={{ pointerEvents: "none" }}>
         <svg width="17" height="17" viewBox="0 0 24 24">
           <polygon points="5 3 19 12 5 21 5 3" fill="#000" />
         </svg>
       </div>
 
-      {/* IG badge */}
       <div style={{
         position: "absolute", top: 12, right: 12,
         background: "rgba(0,0,0,0.65)", borderRadius: 8,
@@ -285,12 +265,7 @@ export default function VideoGallery() {
       <div className="vid-grid">
         {CAMPAIGNS.map((c) =>
           c.reelUrl ? (
-            <ReelCard
-              key={c.title}
-              c={c}
-              big={c.big}
-              onPlay={() => setActiveReel(c)}
-            />
+            <ReelCard key={c.title} c={c} big={c.big} onPlay={() => setActiveReel(c)} />
           ) : (
             <div
               key={c.title}
@@ -298,16 +273,11 @@ export default function VideoGallery() {
               data-modal-title={c.title}
               data-modal-sub={c.sub}
             >
-              <div
-                className="vcard-bg"
-                style={{
-                  height: c.big ? 300 : 210,
-                  background: c.bg,
-                  display: "flex", alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: c.big ? 90 : 64,
-                }}
-              >
+              <div className="vcard-bg" style={{
+                height: c.big ? 300 : 210, background: c.bg,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: c.big ? 90 : 64,
+              }}>
                 {c.icon}
               </div>
               <div className="vcard-ov" />
@@ -328,21 +298,14 @@ export default function VideoGallery() {
       </div>
 
       <p style={{
-        marginTop: 32,
-        textAlign: "center",
-        fontSize: 9,
-        color: "var(--muted, #555)",
-        maxWidth: 640,
-        marginLeft: "auto",
-        marginRight: "auto",
-        lineHeight: 1.6,
+        marginTop: 32, textAlign: "center", fontSize: 9,
+        color: "var(--muted, #555)", maxWidth: 640,
+        marginLeft: "auto", marginRight: "auto", lineHeight: 1.6,
       }}>
         * All proprietary content, intellectual assets, and brand identifiers showcased hereinabove remain the exclusive intellectual property of their respective proprietorial entities. Avenue Marketing Agency curates and disseminates said campaigns solely for the purposes of amplifying socio-digital visibility and exemplifying superlative influencer-driven marketing executions. Entities seeking inclusion within our curated portfolio are cordially invited to initiate correspondence at their earliest convenience.
       </p>
 
-      {activeReel && (
-        <ReelModal c={activeReel} onClose={() => setActiveReel(null)} />
-      )}
+      {activeReel && <ReelModal c={activeReel} onClose={() => setActiveReel(null)} />}
     </section>
   );
 }

@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 
-// The hero manages its own slider logic inside useEffect
 export default function HeroSection() {
   useEffect(() => {
     let currentSlide = 2;
@@ -55,47 +54,47 @@ export default function HeroSection() {
         </svg>
       </div>
 
-      {/* Slide 1: Read Report, Watch Demo */}
+      {/* Slide 1 */}
       <div className="slide">
         <div className="slide-bg" style={{ background: "linear-gradient(135deg,#1a0e00,#0d0600,#000)" }}>🌟</div>
         <div className="slide-ov" />
         <div className="slide-body">
-          <div className="slide-chip">📈 India&apos;s #1 Platform</div>
+          <div className="slide-chip">👋 Welcome to Avenue Marketing Agency</div>
           <h1 className="slide-h">
-            &quot;70% of brands increased their influencer marketing spends in 2025&quot;
+            Are you a <em>Brand</em> or a <em>Creator</em>?
           </h1>
           <p className="slide-sub">
-            India&apos;s most data-driven influencer marketing ecosystem — built for brands that demand ROI.
+            We work with both — tell us who you are and we&apos;ll show you exactly what Avenue can do for you.
           </p>
           <div className="slide-btns">
-            <a href="/#features" className="btn btn-y">Read the Report →</a>
-            <a href="/contact" className="btn btn-w">Watch Demo</a>
+            <a href="/for-brands" className="btn btn-y">Are you a Brand? →</a>
+            <a href="/for-creators" className="btn btn-w">Are you a Creator? →</a>
           </div>
         </div>
         <div className="hero-prog" />
       </div>
 
-      {/* Slide 2: Talk to Us, View Case Study */}
+      {/* Slide 2 */}
       <div className="slide">
         <div className="slide-bg" style={{ background: "linear-gradient(135deg,#0a0800,#1a1300,#000)" }}>🧳</div>
         <div className="slide-ov" />
         <div className="slide-body">
-          <div className="slide-chip">🧳 Samsonite × Avenue Marketing Agency</div>
+          <div className="slide-chip">🎥 For Creators</div>
           <h1 className="slide-h">
-            Celebrity meets creator — 100M+ audience reached for Samsonite India
+            Join 7,50,000+ creators already earning with top brands
           </h1>
           <p className="slide-sub">
-            A luxury campaign that redefined what influencer marketing can achieve at scale.
+            Get matched with brands, earn from barter collabs, and grow your network — all in one place.
           </p>
           <div className="slide-btns">
-            <a href="/#video-gallery" className="btn btn-y">View Case Study →</a>
-            <a href="/contact" className="btn btn-o">Talk to Us</a>
+            <a href="/for-brands" className="btn btn-y">I&apos;m a Brand →</a>
+            <a href="/for-creators" className="btn btn-w">I&apos;m a Creator →</a>
           </div>
         </div>
         <div className="hero-prog" />
       </div>
 
-      {/* Slide 3: Barter Collab — our role, brand logo */}
+      {/* Slide 3: Barter Collab — default on */}
       <div className="slide slide-barter on">
         <div className="slide-bg slide-bg-barter" style={{ background: "linear-gradient(135deg,#0e0800,#1a0f00,#000)" }}>
           <span className="slide-barter-emoji">🤝</span>
@@ -113,14 +112,14 @@ export default function HeroSection() {
             We specialise in meaningful barter deals that drive ROI for brands and value for creators.
           </p>
           <div className="slide-btns">
-            <a href="/contact" className="btn btn-y">Talk to Us →</a>
-            <a href="/#video-gallery" className="btn btn-w">See Creators</a>
+            <a href="/for-brands" className="btn btn-y">I&apos;m a Brand →</a>
+            <a href="/for-creators" className="btn btn-w">I&apos;m a Creator →</a>
           </div>
         </div>
         <div className="hero-prog" />
       </div>
 
-      {/* Slide 4: Fashion Icons (generalised, replaces BGMI) */}
+      {/* Slide 4: Fashion Icons */}
       <div className="slide">
         <div className="slide-bg" style={{ background: "linear-gradient(135deg,#1a0a14,#0a0508,#000)" }}>👗</div>
         <div className="slide-ov" />
@@ -133,8 +132,8 @@ export default function HeroSection() {
             India&apos;s top fashion and lifestyle influencer activations — coordinated end-to-end on Avenue Marketing Agency.
           </p>
           <div className="slide-btns">
-            <a href="/contact" className="btn btn-y">Talk to Us →</a>
-            <a href="/#top-creators" className="btn btn-w">View Campaign</a>
+            <a href="/for-brands" className="btn btn-y">Explore for Brands →</a>
+            <a href="/for-creators" className="btn btn-w">Join as Creator →</a>
           </div>
         </div>
         <div className="hero-prog" />
