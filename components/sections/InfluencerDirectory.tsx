@@ -64,81 +64,127 @@ export default function InfluencerDirectory() {
     filter === "all" ? INFLUENCERS : INFLUENCERS.filter((inf) => inf.c === filter);
 
   return (
-    <section id="top-creators" className="inf-bg reveal">
-      <div className="tc" style={{ marginBottom: 14 }}>
-        <span className="stag">Discover Creators</span>
-        <h2 className="sh">7,50,000+ <em>Influencers</em> Across India</h2>
-        <p className="ssub" style={{ margin: "10px auto 28px" }}>
-          Browse by niche — hover any card to visit their profile
-        </p>
-      </div>
+    <>
+      <style>{`
+        /* 2 columns on mobile so 2 cards always visible */
+        @media (max-width: 860px) {
+          .inf-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 12px !important;
+          }
+          .icard-photo {
+            aspect-ratio: 1 / 1 !important;
+          }
+          .icard-img {
+            font-size: 42px !important;
+          }
+        }
+        @media (max-width: 560px) {
+          .inf-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 10px !important;
+          }
+          .icard-info {
+            padding: 9px 10px 11px !important;
+          }
+          .icard-name {
+            font-size: 12px !important;
+          }
+          .icard-cat {
+            font-size: 9.5px !important;
+          }
+          .icard-meta {
+            font-size: 10px !important;
+          }
+          .ov-f {
+            font-size: 20px !important;
+          }
+          .ov-er {
+            font-size: 10px !important;
+          }
+          .ov-cta {
+            font-size: 11px !important;
+            padding: 6px 12px !important;
+          }
+        }
+      `}</style>
 
-      {/* Category filter pills */}
-      <div className="cat-row">
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat}
-            className={`catb${filter === cat.toLowerCase() ? " on" : ""}`}
-            onClick={() => setFilter(cat.toLowerCase())}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+      <section id="top-creators" className="inf-bg reveal">
+        <div className="tc" style={{ marginBottom: 14 }}>
+          <span className="stag">Discover Creators</span>
+          <h2 className="sh">7,50,000+ <em>Influencers</em> Across India</h2>
+          <p className="ssub" style={{ margin: "10px auto 28px" }}>
+            Browse by niche — hover any card to visit their profile
+          </p>
+        </div>
 
-      {/* Grid */}
-      <div className="inf-grid">
-        {filtered.map((inf) => (
-          <div key={inf.n} className="icard">
-            <div className="icard-photo">
+        {/* Category filter pills */}
+        <div className="cat-row">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              className={`catb${filter === cat.toLowerCase() ? " on" : ""}`}
+              onClick={() => setFilter(cat.toLowerCase())}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
 
-              {/* ── Default: photo ── */}
-              <div
-                className="icard-img"
-                style={{ background: `linear-gradient(135deg,${inf.bg},#0d0d0d)`, position: "relative", overflow: "hidden" }}
-              >
-                <img
-                  src={`/images/influencers/${inf.image}`}
-                  alt={inf.n}
-                  style={{ width: "100%", height: "100%", objectFit: "contain", position: "absolute", inset: 0, display: "block" }}
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-                />
-              </div>
+        {/* Grid */}
+        <div className="inf-grid">
+          {filtered.map((inf) => (
+            <div key={inf.n} className="icard">
+              <div className="icard-photo">
 
-              {/* ── Hover overlay: emoji + followers + Visit Profile ── */}
-              <div className="icard-ov">
-                <div style={{ fontSize: 48, lineHeight: 1, marginBottom: 8 }}>{inf.e}</div>
-                <div className="ov-f">{inf.f}</div>
-                <div className="ov-er" style={{ marginBottom: 12 }}>Instagram Followers</div>
-                <a
-                  href={inf.instagram}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="ov-cta"
-                  style={{ textDecoration: "none" }}
-                  onClick={(e) => e.stopPropagation()}
+                {/* Default: photo */}
+                <div
+                  className="icard-img"
+                  style={{ background: `linear-gradient(135deg,${inf.bg},#0d0d0d)`, position: "relative", overflow: "hidden" }}
                 >
-                  Visit Profile →
-                </a>
+                  <img
+                    src={`/images/influencers/${inf.image}`}
+                    alt={inf.n}
+                    style={{ width: "100%", height: "100%", objectFit: "contain", position: "absolute", inset: 0, display: "block" }}
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                  />
+                </div>
+
+                {/* Hover overlay: emoji + followers + Visit Profile */}
+                <div className="icard-ov">
+                  <div style={{ fontSize: 48, lineHeight: 1, marginBottom: 8 }}>{inf.e}</div>
+                  <div className="ov-f">{inf.f}</div>
+                  <div className="ov-er" style={{ marginBottom: 12 }}>Instagram Followers</div>
+                  <a
+                    href={inf.instagram}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="ov-cta"
+                    style={{ textDecoration: "none" }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Visit Profile →
+                  </a>
+                </div>
+
               </div>
 
-            </div>
-
-            {/* Always-visible card info */}
-            <div className="icard-info">
-              <div className="icard-name">{inf.n}</div>
-              <div className="icard-cat">{inf.cl}</div>
-              <div className="icard-meta">
-                <span>📸 {inf.f} followers</span>
+              {/* Always-visible card info */}
+              <div className="icard-info">
+                <div className="icard-name">{inf.n}</div>
+                <div className="icard-cat">{inf.cl}</div>
+                <div className="icard-meta">
+                  <span>📸 {inf.f} followers</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <div style={{ textAlign: "center", marginTop: 36 }}>
-        <a href="/for-creators" className="btn btn-o">View More Creators On Creators Page↓</a>
-      </div>
-    </section>
+        <div style={{ textAlign: "center", marginTop: 36 }}>
+          <a href="/for-creators" className="btn btn-o">View More Creators On Creators Page↓</a>
+        </div>
+      </section>
+    </>
   );
 }
